@@ -1,0 +1,6 @@
+CREATE ROLE [NLogWriter] AUTHORIZATION [dbo]
+GO
+
+ALTER ROLE [NLogWriter] ADD MEMBER [cr_prod]
+
+GO

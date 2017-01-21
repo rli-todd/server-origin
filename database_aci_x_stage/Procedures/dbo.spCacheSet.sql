@@ -1,0 +1,14 @@
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROC spCachePut(@Key VARCHAR(MAX), @Value VARCHAR(MAX)) AS
+	SET NOCOUNT ON
+	DECLARE @HashKey BINARY(20)=HASHBYTES('sha1',@Key)
+	IF EXISTS (SELECT 1 FROM Cache WHERE HashKey=@Hashkey)
+		UPDATE Cache SET Value=@Value, DateCreated=GETDATE()
+			WHERE HashKey=@HashKey
+	ELSE
+		INSERT INTO Cache(HashKey,Value,DateCreated)
+			VALUES(@HashKey,@Value,GETDATE())
+GO

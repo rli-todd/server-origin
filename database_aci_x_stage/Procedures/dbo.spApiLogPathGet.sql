@@ -1,0 +1,17 @@
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROC [dbo].[spApiLogPathGet]( @PathAndQuery VARCHAR(255) ) AS
+	SET NOCOUNT ON
+	DECLARE @ApiLogPathID INT
+	BEGIN TRAN
+		SELECT @ApiLogPathID=ID FROM ApiLogPath WHERE Path=ISNULL(@PathAndQuery,'???')
+		IF @ApiLogPathID IS NULL BEGIN
+			INSERT INTO ApiLogPath(Path,DateCreated)VALUES(ISNULL(@PathAndQuery,'???'),GETUTCDATE())
+			SET @ApiLogPathID=SCOPE_IDENTITY()
+		END
+	COMMIT
+	RETURN @ApiLogPathID
+
+GO

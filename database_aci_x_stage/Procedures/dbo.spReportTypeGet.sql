@@ -1,0 +1,12 @@
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROC [dbo].[spReportTypeGet](@SiteID TINYINT, @Keys STRING_TABLE READONLY) AS
+	SET NOCOUNT ON
+	SELECT rt.*
+		FROM ReportType rt
+		JOIN @Keys k
+			ON k.String=rt.TypeCode
+		WHERE rt.SiteID=@SiteID
+GO

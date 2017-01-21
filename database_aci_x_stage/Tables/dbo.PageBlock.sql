@@ -1,0 +1,35 @@
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+SET ANSI_PADDING OFF
+GO
+CREATE TABLE [dbo].[PageBlock] (
+		[PageID]      [int] NOT NULL,
+		[BlockID]     [int] NOT NULL
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[PageBlock]
+	ADD
+	CONSTRAINT [PK_PageBlock]
+	PRIMARY KEY
+	CLUSTERED
+	([PageID], [BlockID])
+	ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[PageBlock]
+	WITH CHECK
+	ADD CONSTRAINT [FK_PageBlock_Block]
+	FOREIGN KEY ([BlockID]) REFERENCES [dbo].[Block] ([ID])
+ALTER TABLE [dbo].[PageBlock]
+	CHECK CONSTRAINT [FK_PageBlock_Block]
+
+GO
+ALTER TABLE [dbo].[PageBlock]
+	WITH CHECK
+	ADD CONSTRAINT [FK_PageBlock_Page]
+	FOREIGN KEY ([PageID]) REFERENCES [dbo].[Page] ([ID])
+ALTER TABLE [dbo].[PageBlock]
+	CHECK CONSTRAINT [FK_PageBlock_Page]
+
+GO
+ALTER TABLE [dbo].[PageBlock] SET (LOCK_ESCALATION = TABLE)
+GO

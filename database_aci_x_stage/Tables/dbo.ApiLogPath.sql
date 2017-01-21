@@ -1,0 +1,24 @@
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[ApiLogPath] (
+		[ID]              [int] IDENTITY(1, 1) NOT NULL,
+		[Path]            [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+		[DateCreated]     [datetime] NOT NULL
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[ApiLogPath]
+	ADD
+	CONSTRAINT [PK_ApiLogPath]
+	PRIMARY KEY
+	CLUSTERED
+	([ID])
+	ON [PRIMARY]
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [IX_ApiLogPath_Path]
+	ON [dbo].[ApiLogPath] ([Path])
+	ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[ApiLogPath] SET (LOCK_ESCALATION = TABLE)
+GO

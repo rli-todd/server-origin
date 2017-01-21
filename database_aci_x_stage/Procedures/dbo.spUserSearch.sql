@@ -1,0 +1,10 @@
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[spUserSearch](@SiteID TINYINT, @EmailAddress VARCHAR(128)) AS
+	SET NOCOUNT ON
+	SELECT ID
+		FROM Users
+		WHERE SiteID=@SiteID
+		AND EmailAddress=@EmailAddress
+GO

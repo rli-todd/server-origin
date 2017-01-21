@@ -1,0 +1,19 @@
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[ApiTemplate] (
+		[ID]           [smallint] IDENTITY(1, 1) NOT NULL,
+		[Template]     [varchar](512) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[ApiTemplate]
+	ADD
+	CONSTRAINT [PK_ApiTemplate]
+	PRIMARY KEY
+	CLUSTERED
+	([Template])
+	ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[ApiTemplate] SET (LOCK_ESCALATION = TABLE)
+GO
