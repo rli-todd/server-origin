@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F2E2575F-283E-4A06-B5AD-74E99548A8A2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Aci.X.Business</RootNamespace>
+    <AssemblyName>Aci.X.Business</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Win2Go|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Win2Go\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NLog, Version=3.2.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=100.0.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RestSharpSigned.105.0.1\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="StackExchange.Redis, Version=1.0.316.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\StackExchange.Redis.1.0.394\lib\net45\StackExchange.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.DataVisualization" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApiLogger.cs" />
+    <Compile Include="Cache\GeneralPurposeCache.cs" />
+    <Compile Include="Cache\OrderCache.cs" />
+    <Compile Include="Cache\QueryCache.cs" />
+    <Compile Include="Cache\CatalogCache.cs" />
+    <Compile Include="Cache\ReportCache.cs" />
+    <Compile Include="Cache\ReportTypeCache.cs" />
+    <Compile Include="Cache\SiteCache.cs" />
+    <Compile Include="Cache\SiteEntityCacheBase.cs" />
+    <Compile Include="Cache\SiteSkuCache.cs" />
+    <Compile Include="Cache\SiteSkuCacheByExternalID.cs" />
+    <Compile Include="Cache\SiteUserCache.cs" />
+    <Compile Include="Cache\SiteOrderCacheByExternalID.cs" />
+    <Compile Include="Cache\SiteUserCacheByEmailAddress.cs" />
+    <Compile Include="Cache\VisitCacheOld.cs" />
+    <Compile Include="Cache\VisitCache.cs" />
+    <Compile Include="Entity\AccessToken.cs" />
+    <Compile Include="Entity\Block.cs" />
+    <Compile Include="Entity\Cart.cs" />
+    <Compile Include="Entity\Category.cs" />
+    <Compile Include="Entity\ContentBlock.cs" />
+    <Compile Include="Entity\Credit.cs" />
+    <Compile Include="Entity\CreditCard.cs" />
+    <Compile Include="Entity\Order.cs" />
+    <Compile Include="Entity\Page.cs" />
+    <Compile Include="Entity\Product.cs" />
+    <Compile Include="Entity\Report.cs" />
+    <Compile Include="Entity\ReportType.cs" />
+    <Compile Include="Entity\Section.cs" />
+    <Compile Include="Entity\Site.cs" />
+    <Compile Include="Entity\Sku.cs" />
+    <Compile Include="Entity\Variation.cs" />
+    <Compile Include="Entity\User.cs" />
+    <Compile Include="Entity\Visit.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Client\Trunk\Aci.X.ClientLib\Aci.X.ClientLib.csproj">
+      <Project>{9af7b454-8763-40c6-8da9-6f76b9151877}</Project>
+      <Name>Aci.X.ClientLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Client\trunk\Solishine.CommonLib\Solishine.CommonLib.csproj">
+      <Project>{5c6b5f62-db89-443e-aede-14b1e43dd566}</Project>
+      <Name>Solishine.CommonLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aci.X.DatabaseEntity\Aci.X.DatabaseEntity.csproj">
+      <Project>{ad1c19b3-846c-46f6-b0f4-2bb51403715d}</Project>
+      <Name>Aci.X.DatabaseEntity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aci.X.Database\Aci.X.Database.csproj">
+      <Project>{5d064f66-1cdb-4fca-9c0c-a7f5b18d7b6d}</Project>
+      <Name>Aci.X.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aci.X.IwsLib\Aci.X.IwsLib.csproj">
+      <Project>{b7c2870c-7dbd-440d-9446-20348d23ac3b}</Project>
+      <Name>Aci.X.IwsLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aci.X.ServerLib\Aci.X.ServerLib.csproj">
+      <Project>{0a32834c-023a-4e19-bdee-e80972f6165f}</Project>
+      <Name>Aci.X.ServerLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

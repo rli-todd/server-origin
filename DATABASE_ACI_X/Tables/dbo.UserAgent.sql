@@ -1,0 +1,24 @@
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[UserAgent] (
+		[ID]            [int] IDENTITY(1, 1) NOT NULL,
+		[UserAgent]     [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[UserAgent]
+	ADD
+	CONSTRAINT [PK_UserAgent_1]
+	PRIMARY KEY
+	CLUSTERED
+	([ID])
+	ON [PRIMARY]
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [IX_UserAgent]
+	ON [dbo].[UserAgent] ([UserAgent])
+	INCLUDE ([ID])
+	ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[UserAgent] SET (LOCK_ESCALATION = TABLE)
+GO

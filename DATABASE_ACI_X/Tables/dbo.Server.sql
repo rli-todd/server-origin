@@ -1,0 +1,24 @@
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Server] (
+		[ID]             [tinyint] IDENTITY(1, 1) NOT NULL,
+		[ServerName]     [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Server]
+	ADD
+	CONSTRAINT [PK_Server]
+	PRIMARY KEY
+	CLUSTERED
+	([ID])
+	ON [PRIMARY]
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [IX_Server]
+	ON [dbo].[Server] ([ServerName])
+	INCLUDE ([ID])
+	ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Server] SET (LOCK_ESCALATION = TABLE)
+GO

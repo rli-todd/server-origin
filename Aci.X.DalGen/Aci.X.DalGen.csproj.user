@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <StartArguments>DalSprocs.cs ..\..\..\Aci.X.Database\bin\Debug\Aci.X.Database.dll Aci.X.Database DalSqlDb MyStoredProc</StartArguments>
+    <StartWorkingDirectory>D:\ACI\Code\Aci.X\Server\trunk\Aci.X.DalGen\bin\Debug\</StartWorkingDirectory>
+  </PropertyGroup>
+</Project>

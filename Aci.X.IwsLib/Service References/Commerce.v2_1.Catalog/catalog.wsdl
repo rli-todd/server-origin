@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="https://api.intelius.com/commerce/2.1/wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="https://api.intelius.com/commerce/2.1/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="https://api.intelius.com/commerce/2.1/wsdl">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xsd:complexType name="ClientAuthType">
+        <xsd:all>
+          <xsd:element name="ClientID" type="xsd:string" />
+          <xsd:element name="AuthID" type="xsd:string" />
+          <xsd:element name="AuthKey" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="UserContextType">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="UserToken" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="SearchCriteriaType">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="FirstName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="MiddleName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="LastName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Address" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="City" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="State" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ZipCode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Phone" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ScreenName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="DOB" type="xsd:date" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="RecordID" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="CompletionResponseType">
+        <xsd:all>
+          <xsd:element name="CompletionCode" type="xsd:string" />
+          <xsd:element name="ResponseMessage" type="xsd:string" />
+          <xsd:element name="ResponseDetail" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Discount">
+        <xsd:all>
+          <xsd:element name="DiscountType" type="xsd:string" />
+          <xsd:element name="SavingsAmount" type="xsd:decimal" />
+          <xsd:element name="OfferStatus" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Description" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfDiscount">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Discount" type="tns:Discount" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="PriceDetails">
+        <xsd:all>
+          <xsd:element name="ProductToken" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="MSRPPrice" type="xsd:decimal" />
+          <xsd:element name="Price" type="xsd:decimal" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="MinimumPrice" type="xsd:decimal" />
+          <xsd:element name="Discounts" type="tns:ArrayOfDiscount" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfPriceListings">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="PriceList" type="tns:PriceDetails" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Duration">
+        <xsd:all>
+          <xsd:element name="Unit" type="tns:EnumerationOfUnit" />
+          <xsd:element name="Amount" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Price" type="xsd:decimal" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="DelayedBill">
+        <xsd:all>
+          <xsd:element name="Duration" type="tns:Duration" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="SubscriptionDetails">
+        <xsd:all>
+          <xsd:element name="Title" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Descripton" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Savings" type="xsd:decimal" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ProductReferenceID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ProductID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="TrialPeriod" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="RecurrencePeriod" type="xsd:int" />
+          <xsd:element name="RecurrenceDuration" type="tns:Duration" />
+          <xsd:element name="RecurringPrice" type="xsd:decimal" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Expiration" type="xsd:string" />
+          <xsd:element name="FeatureSetID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="DelayedBill" type="tns:DelayedBill" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ServiceGroupID" type="xsd:int" />
+          <xsd:element name="ServiceID" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="SplitPackage">
+        <xsd:all>
+          <xsd:element name="Title" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Descripton" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Savings" type="xsd:decimal" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ProductReferenceID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ProductID" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Module">
+        <xsd:all>
+          <xsd:element name="ModuleID" type="xsd:int" />
+          <xsd:element name="Title" type="xsd:string" />
+          <xsd:element name="Description" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfFulfillmentModules">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="FulfillmentModule" type="tns:Module" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Product">
+        <xsd:all>
+          <xsd:element name="ProductReferenceID" type="xsd:string" />
+          <xsd:element name="ProductID" type="xsd:string" />
+          <xsd:element name="ProductType" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="AddonType" type="tns:EnumerationOfAddonType" />
+          <xsd:element name="CategoryType" type="xsd:string" />
+          <xsd:element name="GroupName" type="xsd:string" />
+          <xsd:element name="Title" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Description" type="xsd:string" />
+          <xsd:element name="Units" type="xsd:int" />
+          <xsd:element name="Quantity" type="xsd:int" />
+          <xsd:element name="PriceListings" type="tns:ArrayOfPriceListings" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="SubscriptionDetails" type="tns:SubscriptionDetails" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="SplitPackageDetails" type="tns:SplitPackage" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="SubscriptionSplitPackageDetails" type="tns:SplitPackage" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="FulfillmentModules" type="tns:ArrayOfFulfillmentModules" />
+          <xsd:element name="FulfillmentBundle" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfAddon">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Addon" type="tns:Product" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="GetAddonsRequestType">
+        <xsd:all>
+          <xsd:element form="qualified" name="ClientAuth" type="tns:ClientAuthType" />
+          <xsd:element minOccurs="0" form="qualified" name="ProductID" type="xsd:int" />
+          <xsd:element minOccurs="0" form="qualified" name="ProductToken" type="xsd:string" />
+          <xsd:element form="qualified" name="OrderLocation" type="xsd:int" />
+          <xsd:element form="qualified" name="UserContext" type="tns:UserContextType" />
+          <xsd:element form="qualified" name="SearchCriteria" type="tns:SearchCriteriaType" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="GetAddonsResponseType">
+        <xsd:all>
+          <xsd:element form="qualified" name="CompletionResponse" type="tns:CompletionResponseType" />
+          <xsd:element form="qualified" name="Addons" type="tns:ArrayOfAddon" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ProductItemType">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="ProductID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ProductToken" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ProductItemListType">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Products" type="tns:ProductItemType" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfProducts">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Product" type="tns:Product" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="GetProductRequestType">
+        <xsd:all>
+          <xsd:element form="qualified" name="ClientAuth" type="tns:ClientAuthType" />
+          <xsd:element minOccurs="0" form="qualified" name="ProductGroupID" type="xsd:int" />
+          <xsd:element form="qualified" name="OrderLocation" type="xsd:int" />
+          <xsd:element form="qualified" name="ProductList" type="tns:ProductItemListType" />
+          <xsd:element form="qualified" name="UserContext" type="tns:UserContextType" />
+          <xsd:element form="qualified" name="SearchCriteria" type="tns:SearchCriteriaType" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="GetProductResponseType">
+        <xsd:all>
+          <xsd:element form="qualified" name="CompletionResponse" type="tns:CompletionResponseType" />
+          <xsd:element form="qualified" name="Products" type="tns:ArrayOfProducts" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:simpleType name="EnumerationOfAddonType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="MainSku" />
+          <xsd:enumeration value="Email" />
+          <xsd:enumeration value="ReportAddon" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="EnumerationOfUnit">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="HOUR" />
+          <xsd:enumeration value="DAY" />
+          <xsd:enumeration value="MONTH" />
+          <xsd:enumeration value="YEAR" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:element name="GetAddons" type="tns:GetAddonsRequestType" />
+      <xsd:element name="GetAddonsResponse" type="tns:GetAddonsResponseType" />
+      <xsd:element name="GetProduct" type="tns:GetProductRequestType" />
+      <xsd:element name="GetProductResponse" type="tns:GetProductResponseType" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="GetAddonsRequest">
+    <wsdl:part name="parameters" element="tns:GetAddons" />
+  </wsdl:message>
+  <wsdl:message name="GetAddonsResponse">
+    <wsdl:part name="parameters" element="tns:GetAddonsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetProductRequest">
+    <wsdl:part name="parameters" element="tns:GetProduct" />
+  </wsdl:message>
+  <wsdl:message name="GetProductResponse">
+    <wsdl:part name="parameters" element="tns:GetProductResponse" />
+  </wsdl:message>
+  <wsdl:portType name="CatalogServicesPortType">
+    <wsdl:operation name="GetAddons">
+      <documentation>Get a product addons for a given product id</documentation>
+      <wsdl:input message="tns:GetAddonsRequest" />
+      <wsdl:output message="tns:GetAddonsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProduct">
+      <documentation>Get a product details</documentation>
+      <wsdl:input message="tns:GetProductRequest" />
+      <wsdl:output message="tns:GetProductResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CatalogServicesBinding" type="tns:CatalogServicesPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAddons">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/catalog.php/GetAddons" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProduct">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/catalog.php/GetProduct" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CatalogServices">
+    <wsdl:port name="CatalogServicesPort" binding="tns:CatalogServicesBinding">
+      <soap:address location="http://iwscommerce.intelius.com/commerce/2.1/catalog.php" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

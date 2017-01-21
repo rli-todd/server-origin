@@ -1,0 +1,10 @@
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+CREATE PROC [dbo].[spUtilPermissionsGrant] AS
+  SET NOCOUNT ON
+  GRANT EXECUTE ON spGeoStateGet TO api_dev
+  GRANT EXECUTE ON spGeoCountyGet TO api_dev
+  GRANT EXECUTE ON spGeoCityGet TO api_dev
+GO

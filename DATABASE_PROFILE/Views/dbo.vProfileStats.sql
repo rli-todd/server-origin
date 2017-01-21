@@ -1,0 +1,17 @@
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+CREATE VIEW [dbo].[vProfileStats] AS
+SELECT 
+	CONVERT(DECIMAL(15,2),COUNT(*))/1000000'M_Rows',
+	CONVERT(DECIMAL(15,2),COUNT(DISTINCT PersonID))/1000000'M_Distinct_PersonID',
+	CONVERT(DECIMAL(15,2),COUNT(DISTINCT RelatedPersonID))/1000000'M_Distinct_RelatedPersonID',
+	(
+		SELECT CONVERT(DECIMAL(15,2),COUNT(*))/1000000
+			FROM PersonRelative pr
+			WHERE EXISTS (SELECT * FROM PersonRelative pr2 WHERE pr.PersonID=pr2.RelatedPersonID AND pr.RelatedPersonID=pr2.PersonID)
+	)'M_RowsWithMirror'
+FROM PersonRelative
+
+GO

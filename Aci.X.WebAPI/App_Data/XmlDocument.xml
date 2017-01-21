@@ -1,0 +1,963 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Solishine.X.WebAPI</name>
+    </assembly>
+    <members>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
+            </summary>
+            <param name="description">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The ID as a string.</returns>
+        </member>
+        <member name="T:Aci.X.WebAPI.Areas.HelpPage.HelpPageConfig">
+            <summary>
+            Use this class to customize the Help Page.
+            For example you can set a custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> to supply the documentation
+            or you can provide the samples for the requests/responses.
+            </summary>
+        </member>
+        <member name="T:Aci.X.WebAPI.Areas.HelpPage.Controllers.HelpController">
+            <summary>
+            The controller that will handle requests for the help page.
+            </summary>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetDocumentationProvider(System.Web.Http.HttpConfiguration,System.Web.Http.Description.IDocumentationProvider)">
+            <summary>
+            Sets the documentation provider for help page.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="documentationProvider">The documentation provider.</param>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleObjects(System.Web.Http.HttpConfiguration,System.Collections.Generic.IDictionary{System.Type,System.Object})">
+            <summary>
+            Sets the objects that will be used by the formatters to produce sample requests/responses.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleObjects">The sample objects.</param>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type and action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample request directly for the specified media type and action with parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type of the action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample response directly for the specified media type of the action with specific parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleForType(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Sets the sample directly for all actions with the specified type and media type.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The parameter type or return type of an action.</param>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action. 
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action. 
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action. 
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action. 
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Gets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <returns>The help page sample generator.</returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration,Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleGenerator)">
+            <summary>
+            Sets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleGenerator">The help page sample generator.</param>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageApiModel(System.Web.Http.HttpConfiguration,System.String)">
+            <summary>
+            Gets the model that represents an API displayed on the help page. The model is initialized on the first call and cached for subsequent calls.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="apiDescriptionId">The <see cref="T:System.Web.Http.Description.ApiDescription"/> ID.</param>
+            <returns>
+            An <see cref="T:Aci.X.WebAPI.Areas.HelpPage.Models.HelpPageApiModel"/>
+            </returns>
+        </member>
+        <member name="T:Aci.X.WebAPI.Areas.HelpPage.Models.HelpPageApiModel">
+            <summary>
+            The model that represents an API displayed on the help page.
+            </summary>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.Models.HelpPageApiModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Aci.X.WebAPI.Areas.HelpPage.Models.HelpPageApiModel"/> class.
+            </summary>
+        </member>
+        <member name="P:Aci.X.WebAPI.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription">
+            <summary>
+            Gets or sets the <see cref="P:Aci.X.WebAPI.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription"/> that describes the API.
+            </summary>
+        </member>
+        <member name="P:Aci.X.WebAPI.Areas.HelpPage.Models.HelpPageApiModel.SampleRequests">
+            <summary>
+            Gets the sample requests associated with the API.
+            </summary>
+        </member>
+        <member name="P:Aci.X.WebAPI.Areas.HelpPage.Models.HelpPageApiModel.SampleResponses">
+            <summary>
+            Gets the sample responses associated with the API.
+            </summary>
+        </member>
+        <member name="P:Aci.X.WebAPI.Areas.HelpPage.Models.HelpPageApiModel.ErrorMessages">
+            <summary>
+            Gets the error messages associated with this model.
+            </summary>
+        </member>
+        <member name="T:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleGenerator">
+            <summary>
+            This class will generate the samples for the help page.
+            </summary>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleGenerator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleGenerator"/> class.
+            </summary>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleGenerator.GetSampleRequests(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the request body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleGenerator.GetSampleResponses(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the response body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleGenerator.GetSample(System.Web.Http.Description.ApiDescription,Aci.X.WebAPI.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Gets the request or response body samples.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleGenerator.GetActionSample(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.Type,System.Net.Http.Formatting.MediaTypeFormatter,System.Net.Http.Headers.MediaTypeHeaderValue,Aci.X.WebAPI.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Search for samples that are provided directly through <see cref="P:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples"/>.
+            </summary>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="type">The CLR type.</param>
+            <param name="formatter">The formatter.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The sample that matches the parameters.</returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleGenerator.GetSampleObject(System.Type)">
+            <summary>
+            Gets the sample object that will be serialized by the formatters. 
+            First, it will look at the <see cref="P:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects"/>. If no sample object is found, it will try to create one using <see cref="T:Aci.X.WebAPI.Areas.HelpPage.ObjectGenerator"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>The sample object.</returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleGenerator.ResolveType(System.Web.Http.Description.ApiDescription,System.String,System.String,System.Collections.Generic.IEnumerable{System.String},Aci.X.WebAPI.Areas.HelpPage.SampleDirection,System.Collections.ObjectModel.Collection{System.Net.Http.Formatting.MediaTypeFormatter}@)">
+            <summary>
+            Resolves the type of the action parameter or return value when <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/> is used.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or a response.</param>
+            <param name="formatters">The formatters.</param>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleGenerator.WriteSampleObjectUsingFormatter(System.Net.Http.Formatting.MediaTypeFormatter,System.Object,System.Type,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Writes the sample object using formatter.
+            </summary>
+            <param name="formatter">The formatter.</param>
+            <param name="value">The value.</param>
+            <param name="type">The type.</param>
+            <param name="mediaType">Type of the media.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleGenerator.ActualHttpMessageTypes">
+            <summary>
+            Gets CLR types that are used as the content of <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/>.
+            </summary>
+        </member>
+        <member name="P:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples">
+            <summary>
+            Gets the objects that are used directly as samples for certain actions.
+            </summary>
+        </member>
+        <member name="P:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects">
+            <summary>
+            Gets the objects that are serialized as samples by the supported formatters.
+            </summary>
+        </member>
+        <member name="T:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleKey">
+            <summary>
+            This is used to identify the place where the sample should be applied.
+            </summary>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Creates a new <see cref="T:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleKey"/> based on media type and CLR type.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The CLR type.</param>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleKey.#ctor(Aci.X.WebAPI.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleKey"/> based on <see cref="P:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="sampleDirection">The <see cref="P:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,Aci.X.WebAPI.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleKey"/> based on media type, <see cref="P:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The <see cref="P:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="P:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleKey.ControllerName">
+            <summary>
+            Gets the name of the controller.
+            </summary>
+            <value>
+            The name of the controller.
+            </value>
+        </member>
+        <member name="P:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleKey.ActionName">
+            <summary>
+            Gets the name of the action.
+            </summary>
+            <value>
+            The name of the action.
+            </value>
+        </member>
+        <member name="P:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleKey.MediaType">
+            <summary>
+            Gets the media type.
+            </summary>
+            <value>
+            The media type.
+            </value>
+        </member>
+        <member name="P:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleKey.ParameterNames">
+            <summary>
+            Gets the parameter names.
+            </summary>
+        </member>
+        <member name="P:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleKey.SampleDirection">
+            <summary>
+            Gets the <see cref="P:Aci.X.WebAPI.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.
+            </summary>
+        </member>
+        <member name="T:Aci.X.WebAPI.Areas.HelpPage.ImageSample">
+            <summary>
+            This represents an image sample on the help page. There's a display template named ImageSample associated with this class.
+            </summary>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.ImageSample.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Aci.X.WebAPI.Areas.HelpPage.ImageSample"/> class.
+            </summary>
+            <param name="src">The URL of an image.</param>
+        </member>
+        <member name="T:Aci.X.WebAPI.Areas.HelpPage.InvalidSample">
+            <summary>
+            This represents an invalid sample on the help page. There's a display template named InvalidSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:Aci.X.WebAPI.Areas.HelpPage.ObjectGenerator">
+            <summary>
+            This class will create an object of a given type and populate it with sample data.
+            </summary>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.ObjectGenerator.GenerateObject(System.Type)">
+            <summary>
+            Generates an object for a given type. The type needs to be public, have a public default constructor and settable public properties/fields. Currently it supports the following types:
+            Simple types: <see cref="T:System.Int32"/>, <see cref="T:System.String"/>, <see cref="T:System.Enum"/>, <see cref="T:System.DateTime"/>, <see cref="T:System.Uri"/>, etc.
+            Complex types: POCO types.
+            Nullables: <see cref="T:System.Nullable`1"/>.
+            Arrays: arrays of simple types or complex types.
+            Key value pairs: <see cref="T:System.Collections.Generic.KeyValuePair`2"/>
+            Tuples: <see cref="T:System.Tuple`1"/>, <see cref="T:System.Tuple`2"/>, etc
+            Dictionaries: <see cref="T:System.Collections.Generic.IDictionary`2"/> or anything deriving from <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+            Collections: <see cref="T:System.Collections.Generic.IList`1"/>, <see cref="T:System.Collections.Generic.IEnumerable`1"/>, <see cref="T:System.Collections.Generic.ICollection`1"/>, <see cref="T:System.Collections.IList"/>, <see cref="T:System.Collections.IEnumerable"/>, <see cref="T:System.Collections.ICollection"/> or anything deriving from <see cref="T:System.Collections.Generic.ICollection`1"/> or <see cref="T:System.Collections.IList"/>.
+            Queryables: <see cref="T:System.Linq.IQueryable"/>, <see cref="T:System.Linq.IQueryable`1"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>An object of the given type.</returns>
+        </member>
+        <member name="T:Aci.X.WebAPI.Areas.HelpPage.SampleDirection">
+            <summary>
+            Indicates whether the sample is used for request or response
+            </summary>
+        </member>
+        <member name="T:Aci.X.WebAPI.Areas.HelpPage.TextSample">
+            <summary>
+            This represents a preformatted text sample on the help page. There's a display template named TextSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:Aci.X.WebAPI.Areas.HelpPage.XmlDocumentationProvider">
+            <summary>
+            A custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> that reads the API documentation from an XML documentation file.
+            </summary>
+        </member>
+        <member name="M:Aci.X.WebAPI.Areas.HelpPage.XmlDocumentationProvider.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Aci.X.WebAPI.Areas.HelpPage.XmlDocumentationProvider"/> class.
+            </summary>
+            <param name="documentPath">The physical path to XML document.</param>
+        </member>
+        <member name="T:Aci.X.WebAPI.BlockController">
+            <summary>
+            Block Controller
+            </summary>
+        </member>
+        <member name="M:Aci.X.WebAPI.BlockController._GET_block_all">
+            <summary>
+            Returns all currently defined blocks
+            </summary>
+            <param name="block_code"></param>
+            <param name="where"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.BlockController._POST_block_new(Aci.X.ClientLib.Block)">
+            <summary>
+            Creates a new content block
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.BlockController._POST_block_X(System.Int32,Aci.X.ClientLib.Block)">
+            <summary>
+            Updates the passed block
+            </summary>
+            <param name="block_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.BlockController._GET_block_X(System.Int32)">
+            <summary>
+            Returns the specified content block
+            </summary>
+            <param name="block_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.BlockController._DELETE_block_X(System.Int32)">
+            <summary>
+            Deletes the specified content block
+            </summary>
+            <param name="block_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.BlockController._GET_block_for_page_X(System.Int32)">
+            <summary>
+            Returns all content blocks associated with the specified page
+            </summary>
+            <param name="block_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.cartController._GET_cart_ping">
+            <summary>
+            Pings the cart controller
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.cartController._POST_cart_update(Aci.X.ClientLib.Cart)">
+            <summary>
+            Updates the cart with the cart specified in the request payload
+            </summary>
+            <param name="cart"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.cartController._GET_cart">
+            <summary>
+            Gets the shopping cart for the current user's visit.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.cartController._GET_add_X(System.Int32,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Adds the specified SKU to the cart.
+            </summary>
+            <param name="product_sku_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.cartController._GET_remove_X(System.Int32)">
+            <summary>
+            Removes the specified SKU from the cart.http://localhost:62503/select/linda-kubek-in-united-states/twyhqlqmbbce
+            </summary>
+            <param name="product_sku_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.cartController._GET_checkout">
+            <summary>
+            Checks out the user with the contents of the cart.
+            User must have a valid credit card on file.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.cartController._GET_clear">
+            <summary>
+            Clears the shopping cart for the current user.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.CatalogController._GET_catalog_ping">
+            <summary>
+            Pings the catalog controller
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.CatalogController._GET_catalog_refresh">
+            <summary>
+            Administrative call.  Refreshes catalog.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.GeoController._GET_geo_states">
+            <summary>
+            Returns an array of all US States
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.GeoController._GET_geo_states_X_cities(System.Int32)">
+            <summary>
+            Returns an array of all cities in the specified state.
+            </summary>
+            <param name="state_fips">State FIPS code</param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.GeoController._GET_geo_states_X_counties(System.Int32)">
+            <summary>
+            Returns an array of all counties in the specified state.
+            </summary>
+            <param name="state_fips">State FIPS code</param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.GeoController._GET_geo_states_X_counties_X_cities(System.Int32,System.Int32)">
+            <summary>
+            Returns an array of all cities in the specified state and county
+            </summary>
+            <param name="state_fips">State FIPS code</param>
+            <param name="county_fips">County FIPS code</param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.GeoController._GET_geo_states_X_cities_X_content_X(System.Int32,System.Int32,System.String)">
+            <summary>
+            </summary>
+            <param name="state_fips">State FIPS code</param>
+            <param name="city_fips">City FIPS code</param>
+            <param name="template">Template name</param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.GeoController._GET_geo_states_X_cities_X_lastname(System.Int32,System.Int32)">
+            <summary>
+            Returns a "top-level" GpdNode (GeoPersonDirectory node) for the given city.
+            This node will contain the Top 100 last names in the city, with the NextLetters
+            attribute containing the first letters of all last names not included in the Top 100.
+            Recipient traverse down the directory from the Top 100 last names, use the 
+            <code>geo/states/{state_fips:int}/cities/{city_fips:int}/lastname/{lastname}/firstname</code> API.
+            Recipient traverse down from the NextLetters, use the 
+            <code>geo/states/{state_fips:int}/cities/{city_fips:int}/lastname/{lastname_starts_with}</code> API.
+            </summary>
+            <param name="state_fips">State FIPS code</param>
+            <param name="city_fips">City FIPS code</param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.GeoController._GET_geo_states_X_cities_X_lastname_X(System.Int32,System.Int32,System.String)">
+            <summary>
+            Returns a GpdNode (GeoPersonDirectory node) for the given city and lastnames
+            that start with the <code>{lastname_starts_with}</code> parameter.  The returned node will contain the 
+            Top 100 last names in the city that start with <code>{lastname_starts_with}</code>, and the NextLetters
+            will contain  the next letters of all the last names not included in the Top 100.
+            Recipient traverse down the directory from the Top 100 last names, use the 
+            <code>geo/states/{state_fips:int}/cities/{city_fips:int}/lastname/{lastname}/firstname</code> API.
+            Recipient traverse down from the NextLetters, use this same API, adding a single "next letter"
+            to the <code>{lastname_starts_with}</code> string.
+            
+            </summary>
+            <param name="state_fips">State FIPS code</param>
+            <param name="city_fips">City FIPS code</param>
+            <param name="lastname_starts_with">Starting characters of last name (may be passed as empty string)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.GeoController._GET_geo_states_X_cities_X_lastname_X_firstname(System.Int32,System.Int32,System.String)">
+            <summary>
+            Returns a "top-level" GpdNode (GeoPersonDirectory node) for the given city and specific last name.
+            This node will contain the Top 100 first names in the city with the specified last name, with the NextLetters
+            attribute containing the first letters of all first names not included in the Top 100.
+            Recipient traverse down the directory from the Top 100 first names, use the <code>search/preview</code> API.
+            Recipient traverse down from the NextLetters, use the 
+            <code>geo/states/{state_fips:int}/cities/{city_fips:int}/lastname/{lastname}/firstname/{firstname_starts_with}</code> API.
+            </summary>
+            <param name="state_fips">State FIPS code</param>
+            <param name="city_fips">City FIPS code</param>
+            <param name="lastname">Full last name</param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.GeoController._GET_geo_states_X_cities_X_lastname_X_firstname_X(System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Returns a "top-level" GpdNode (GeoPersonDirectory node) for the given city, specific last name, 
+            and first names that start with <code>{firstname_starts_with}</code>.
+            This node will contain the Top 100 first names in the city with the specified last name and starting
+            first name characters.  The NextLetters
+            attribute will containh the first letters of all first names not included in the Top 100, given the above criteria.
+            Recipient traverse down the directory from the Top 100 first names, use the <code>search/preview API</code>.
+            Recipient traverse down from the NextLetters, use this same API, adding a single "next letter"
+            to the <code>{firstname_starts_with}</code> string.
+            </summary>
+            <param name="state_fips">State FIPS code</param>
+            <param name="city_fips">City FIPS code</param>
+            <param name="lastname">Full last name</param>
+            <param name="firstname_starts_with">Starting characters of first name (may be passed as empty string)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.GeoController._GET_geo_states_X_cities_X_lastname_X_firstname(System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Returns the 
+            </summary>
+            <param name="state_fips">State FIPS code</param>
+            <param name="city_fips">City FIPS code</param>
+            <param name="lastname">Full last name</param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.OrderController._GET_order_ping">
+            <summary>
+            Pings the order controller
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.OrderController._GET_order_search(System.String,System.String,System.String,System.String,System.Nullable{System.Int32})">
+            <summary>
+            Searches for orders in the user's order history with optional filters
+            </summary>
+            <param name="query_id"></param>
+            <param name="profile_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.OrderController._GET_order_X(System.Int32,System.Boolean)">
+            <summary>
+            Returns the specified order.
+            </summary>
+            <param name="order_id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Aci.X.WebAPI.PageController">
+            <summary>
+            Page Controller
+            </summary>
+        </member>
+        <member name="M:Aci.X.WebAPI.PageController._GET_page_X_content(System.String,System.String)">
+            <summary>
+            Returns the content for the given page
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.PageController._GET_page_all">
+            <summary>
+            Returns all currently defined pages
+            </summary>
+            <param name="page_code"></param>
+            <param name="where"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.PageController._POST_page_new(Aci.X.ClientLib.Page)">
+            <summary>
+            Creates a new page
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.PageController._POST_page_X(System.Int32,Aci.X.ClientLib.Page)">
+            <summary>
+            Updates the passed page
+            </summary>
+            <param name="page_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.PageController._GET_page_X(System.Int32)">
+            <summary>
+            Returns the specified page
+            </summary>
+            <param name="page_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.PageController._DELETE_page_X(System.Int32)">
+            <summary>
+            Deletes the specified page
+            </summary>
+            <param name="page_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.PageController._GET_page_X_add_block_X(System.Int32,System.Int32)">
+            <summary>
+            Adds the specified block to the specified page
+            </summary>
+            <param name="block_id"></param>
+            <param name="page_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.PageController._GET_page_X_remove_block_X(System.Int32,System.Int32)">
+            <summary>
+             Removes the specfied block from the specified page
+            </summary>
+            <param name="block_id"></param>
+            <param name="page_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.ReportController._GET_report_ping">
+            <summary>
+            Pings the report controller
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.ReportController._GET_report_search(System.String,System.String,System.String,System.String,System.Nullable{System.Int32})">
+            <summary>
+            Searches for reports in the user's report history with optional filters
+            </summary>
+            <param name="query_id"></param>
+            <param name="profile_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.ReportController._GET_report_X(System.Int32)">
+            <summary>
+            Returns the specified report.
+            </summary>
+            <param name="report_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.ReportController._POST_report_list(System.Int32[])">
+            <summary>
+            Returns the reports specified by the list of integer report IDs in the request body.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.ReportController._GET_report_new(System.Int32,System.String,System.Int32,System.String)">
+            <summary>
+            Creates and returns a new report based on the user's most recent
+            query (/search/preview), and optionally for a specific profile in 
+            the most recent query's results.
+            </summary>
+            <param name="report_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.SearchController._GET_search_profile(System.String,System.String,System.String,System.String)">
+            <summary>
+            Gets an individual profile id.
+            </summary>
+            <param name="profileid"></param>
+            <param name="firstname"></param>
+            <param name="lastname"></param>
+            <param name="state"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.SectionController._POST_section_new(Aci.X.ClientLib.Section)">
+            <summary>
+            Creates a new content section
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.SectionController._POST_section_X(System.Int32,Aci.X.ClientLib.Section)">
+            <summary>
+            Updates the passed section
+            </summary>
+            <param name="section_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.SectionController._GET_section_X(System.Int32)">
+            <summary>
+            Returns the specified content section
+            </summary>
+            <param name="section_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.SectionController._DELETE_section_X(System.Int32)">
+            <summary>
+            Deletes the specified content section
+            </summary>
+            <param name="section_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.SectionController._GET_section_for_block_X(System.Int32)">
+            <summary>
+            Returns all content sections associated with the specified block
+            </summary>
+            <param name="section_id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Aci.X.WebAPI.UserController">
+            <summary>
+            User Controller
+            </summary>
+        </member>
+        <member name="M:Aci.X.WebAPI.UserController._GET_users_ping">
+            <summary>
+            Pings the user authentication service
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.UserController._POST_user_authenticate(Aci.X.ClientLib.UserCredentials)">
+            <summary>
+            Authenticates user with given credentials and returns an updated VisitToken
+            </summary>
+            <param name="credentials"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.UserController._POST_user_new(Aci.X.ClientLib.User)">
+            <summary>
+            Creates a new user
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.UserController._POST_user_update(Aci.X.ClientLib.User)">
+            <summary>
+            Updates a user
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.UserController._GET_user_current">
+            <summary>
+            Returns active user
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.UserController._POST_user_search(System.String)">
+            <summary>
+            Returns specified user if user is a BackofficeReader
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.UserController._GET_user_X(System.Int32)">
+            <summary>
+            Returns specified user if user is a BackofficeReader
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.UserController._POST_user_card(Aci.X.ClientLib.CreditCard)">
+            <summary>
+            Updates the user's payment method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.UserController._POST_user_wallet(Aci.X.ClientLib.Wallet)">
+            <summary>
+            Updates the user's payment method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.UserController._GET_user_card">
+            <summary>
+            Gets the user's payment method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.UserController._GET_user_credits">
+            <summary>
+            Gets the user's credits
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.UserController._GET_payment_javascript(System.String)">
+            <summary>
+            Gets the client-side JavaScript for rendering and submitting the payment form
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.UserController._POST_user_payment_proxy(Aci.X.ClientLib.CreditCard)">
+            <summary>
+            Updates the user's payment method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.UserController._GET_user_logout">
+            <summary>
+            Creates a new user
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.UserController._POST_user_password(Aci.X.ClientLib.PasswordUpdate)">
+            <summary>
+            Updates the user's password.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.UserController._GET_user_password_reset(System.String)">
+            <summary>
+            Resets the user's password.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.UserController._GET_user_subscriptions">
+            <summary>
+            Returns user subscriptions
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.UserController._GET_user_subscription(System.Int32)">
+            <summary>
+            Returns a single user subscription
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.UserController._GET_user_subscription_cancel(System.Int32)">
+            <summary>
+            cancels a single user subscription
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.UserController._GET_user_subscription_cancel_all">
+            <summary>
+            cancels a single user subscription
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.VariationController._POST_variation_new(Aci.X.ClientLib.Variation)">
+            <summary>
+            Creates a new content variation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.VariationController._POST_variation_X(System.Int32,Aci.X.ClientLib.Variation)">
+            <summary>
+            Updates the passed variation
+            </summary>
+            <param name="variation_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.VariationController._GET_variation_X(System.Int32)">
+            <summary>
+            Returns the specified content variation
+            </summary>
+            <param name="variation_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.VariationController._DELETE_variation_X(System.Int32)">
+            <summary>
+            Deletes the specified content variation
+            </summary>
+            <param name="variation_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.VariationController._GET_variation_for_section_X(System.Int32)">
+            <summary>
+            Returns all content variations associated with the specified section
+            </summary>
+            <param name="variation_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.VisitController._GET_users_ping">
+            <summary>
+            Pings the visit controller
+            </summary>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Aci.X.WebAPI.VisitController._GET_users_error" -->
+        <member name="M:Aci.X.WebAPI.VisitController._POST_visit_new(Aci.X.ClientLib.VisitParams)">
+            <summary>
+            Generates and returns a new visit token for the given user
+            </summary>
+            <param name="visitParams"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aci.X.WebAPI.FilterAttributeExtensions.SetResponseMessage(System.Web.Http.Filters.FilterAttribute,System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,System.Exception)">
+            <summary>
+            If the client is expecting a "WebServiceResponse" type in the response
+            payload, then we will construct one and set the Response appropriately.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Aci.X.WebAPI.WebServiceExceptionFilterAttribute.GetStatusCode(System.Exception)">
+            <summary>
+            Try to set the HTTP status code apppropriate to the exception that was thrown.
+            </summary>
+            <param name="ex"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

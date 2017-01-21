@@ -1,0 +1,17 @@
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+
+CREATE FUNCTION [dbo].[fnMixedCase]( @Input VARCHAR(255) ) RETURNS VARCHAR(255) AS
+BEGIN
+	DECLARE @Output VARCHAR(255)
+	SET @Output=dbo.fnAlphaOnly(RTRIM(LTRIM(ISNULL(@Input,''))))
+	IF LEN(@Output)=1
+		SET @Output=UPPER(@Output)
+	ELSE IF LEN(@Output)>1
+		SET @Output=UPPER(SUBSTRING(@Output,1,1))+LOWER(SUBSTRING(@Output,2,LEN(@Output)-1))
+	RETURN @Output
+END
+
+GO

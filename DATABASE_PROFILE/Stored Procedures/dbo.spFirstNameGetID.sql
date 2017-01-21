@@ -1,0 +1,18 @@
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+
+CREATE PROC [dbo].[spFirstNameGetID]( @FirstName VARCHAR(50)) AS
+	SET NOCOUNT ON
+	DECLARE 
+		@FirstNameID INT
+		
+	SELECT @FirstNameID=ID FROM FirstName WHERE FirstName=ISNULL(@FirstName,'')
+	IF @FirstNameID IS NULL BEGIN
+		INSERT INTO FirstName(FirstName) VALUES (ISNULL(@FirstName,''))
+		SET @FirstNameID=SCOPE_IDENTITY()
+	END
+	RETURN @FirstNameID
+
+GO

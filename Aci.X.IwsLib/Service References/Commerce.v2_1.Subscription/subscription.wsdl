@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="https://api.intelius.com/commerce/2.1/wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="https://api.intelius.com/commerce/2.1/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="https://api.intelius.com/commerce/2.1/wsdl">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xsd:complexType name="ClientAuthType">
+        <xsd:all>
+          <xsd:element name="ClientID" type="xsd:string" />
+          <xsd:element name="AuthID" type="xsd:string" />
+          <xsd:element name="AuthKey" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="UserContextType">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="UserToken" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="CompletionResponseType">
+        <xsd:all>
+          <xsd:element name="CompletionCode" type="xsd:string" />
+          <xsd:element name="ResponseMessage" type="xsd:string" />
+          <xsd:element name="ResponseDetail" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="PeriodType">
+        <xsd:all>
+          <xsd:element name="PeriodID" type="xsd:int" />
+          <xsd:element name="ServiceGroupID" type="xsd:int" />
+          <xsd:element name="StartDate" type="xsd:dateTime" />
+          <xsd:element name="EndDate" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="PreviousPeriodID" type="xsd:string" />
+          <xsd:element name="StatusCode" type="xsd:string" />
+          <xsd:element name="Status" type="xsd:string" />
+          <xsd:element name="Trial" type="xsd:string" />
+          <xsd:element name="PeriodOrderID" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfPeriod">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Period" type="tns:PeriodType" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="SubcriptionType">
+        <xsd:all>
+          <xsd:element name="SubscriptionID" type="xsd:int" />
+          <xsd:element name="ServiceID" type="xsd:int" />
+          <xsd:element name="UserID" type="xsd:int" />
+          <xsd:element name="SubscriptionName" type="xsd:string" />
+          <xsd:element name="EnrollmentDate" type="xsd:dateTime" />
+          <xsd:element name="Status" type="xsd:string" />
+          <xsd:element name="StatusCode" type="xsd:string" />
+          <xsd:element name="StatusChangeDate" type="xsd:dateTime" />
+          <xsd:element name="Periods" type="tns:ArrayOfPeriod" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="CancelSubscriptionRequestType">
+        <xsd:all>
+          <xsd:element form="qualified" name="ClientAuth" type="tns:ClientAuthType" />
+          <xsd:element form="qualified" name="UserContext" type="tns:UserContextType" />
+          <xsd:element form="qualified" name="SubscriptionID" type="xsd:int" />
+          <xsd:element form="qualified" name="ReasonCode" type="tns:EnumerationOfReasonCode" />
+          <xsd:element minOccurs="0" form="qualified" name="CancelledByUserID" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="CancelSubscriptionResponseType">
+        <xsd:all>
+          <xsd:element form="qualified" name="RequestReferenceID" type="xsd:string" />
+          <xsd:element form="qualified" name="CompletionResponse" type="tns:CompletionResponseType" />
+          <xsd:element minOccurs="0" form="qualified" name="Subscription" type="tns:SubcriptionType" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="GetSubscriptionDetailRequestType">
+        <xsd:all>
+          <xsd:element form="qualified" name="ClientAuth" type="tns:ClientAuthType" />
+          <xsd:element form="qualified" name="UserContext" type="tns:UserContextType" />
+          <xsd:element form="qualified" name="SubscriptionID" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="GetSubscriptionDetailResponseType">
+        <xsd:all>
+          <xsd:element form="qualified" name="RequestReferenceID" type="xsd:string" />
+          <xsd:element form="qualified" name="CompletionResponse" type="tns:CompletionResponseType" />
+          <xsd:element minOccurs="0" form="qualified" name="Subscription" type="tns:SubcriptionType" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfSubscription">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Subscription" type="tns:SubcriptionType" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="GetUserSubscriptionsRequestType">
+        <xsd:all>
+          <xsd:element form="qualified" name="ClientAuth" type="tns:ClientAuthType" />
+          <xsd:element form="qualified" name="UserContext" type="tns:UserContextType" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="GetUserSubscriptionsResponseType">
+        <xsd:all>
+          <xsd:element form="qualified" name="RequestReferenceID" type="xsd:string" />
+          <xsd:element form="qualified" name="CompletionResponse" type="tns:CompletionResponseType" />
+          <xsd:element form="qualified" name="Subscriptions" type="tns:ArrayOfSubscription" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ReActivateSubscriptionRequestType">
+        <xsd:all>
+          <xsd:element form="qualified" name="ClientAuth" type="tns:ClientAuthType" />
+          <xsd:element form="qualified" name="UserContext" type="tns:UserContextType" />
+          <xsd:element form="qualified" name="SubscriptionID" type="xsd:int" />
+          <xsd:element form="qualified" name="ReasonCode" type="tns:EnumerationOfReasonCode" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ReActivateSubscriptionResponseType">
+        <xsd:all>
+          <xsd:element form="qualified" name="RequestReferenceID" type="xsd:string" />
+          <xsd:element form="qualified" name="CompletionResponse" type="tns:CompletionResponseType" />
+          <xsd:element minOccurs="0" form="qualified" name="Subscription" type="tns:SubcriptionType" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:simpleType name="EnumerationOfReasonCode">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="User Initiated" />
+          <xsd:enumeration value="Error" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:element name="CancelSubscription" type="tns:CancelSubscriptionRequestType" />
+      <xsd:element name="CancelSubscriptionResponse" type="tns:CancelSubscriptionResponseType" />
+      <xsd:element name="GetSubscriptionDetail" type="tns:GetSubscriptionDetailRequestType" />
+      <xsd:element name="GetSubscriptionDetailResponse" type="tns:GetSubscriptionDetailResponseType" />
+      <xsd:element name="GetUserSubscriptions" type="tns:GetUserSubscriptionsRequestType" />
+      <xsd:element name="GetUserSubscriptionsResponse" type="tns:GetUserSubscriptionsResponseType" />
+      <xsd:element name="ReActivateSubscription" type="tns:ReActivateSubscriptionRequestType" />
+      <xsd:element name="ReActivateSubscriptionResponse" type="tns:ReActivateSubscriptionResponseType" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="CancelSubscriptionRequest">
+    <wsdl:part name="parameters" element="tns:CancelSubscription" />
+  </wsdl:message>
+  <wsdl:message name="CancelSubscriptionResponse">
+    <wsdl:part name="parameters" element="tns:CancelSubscriptionResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSubscriptionDetailRequest">
+    <wsdl:part name="parameters" element="tns:GetSubscriptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="GetSubscriptionDetailResponse">
+    <wsdl:part name="parameters" element="tns:GetSubscriptionDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserSubscriptionsRequest">
+    <wsdl:part name="parameters" element="tns:GetUserSubscriptions" />
+  </wsdl:message>
+  <wsdl:message name="GetUserSubscriptionsResponse">
+    <wsdl:part name="parameters" element="tns:GetUserSubscriptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReActivateSubscriptionRequest">
+    <wsdl:part name="parameters" element="tns:ReActivateSubscription" />
+  </wsdl:message>
+  <wsdl:message name="ReActivateSubscriptionResponse">
+    <wsdl:part name="parameters" element="tns:ReActivateSubscriptionResponse" />
+  </wsdl:message>
+  <wsdl:portType name="SubscriptionServicesPortType">
+    <wsdl:operation name="CancelSubscription">
+      <documentation>Cancel a subscription</documentation>
+      <wsdl:input message="tns:CancelSubscriptionRequest" />
+      <wsdl:output message="tns:CancelSubscriptionResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSubscriptionDetail">
+      <documentation>Returns subscription details for a given subscription along with billing period details etc</documentation>
+      <wsdl:input message="tns:GetSubscriptionDetailRequest" />
+      <wsdl:output message="tns:GetSubscriptionDetailResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserSubscriptions">
+      <documentation>Returns all subscriptions user was ever enrolled in with their current status etc</documentation>
+      <wsdl:input message="tns:GetUserSubscriptionsRequest" />
+      <wsdl:output message="tns:GetUserSubscriptionsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ReActivateSubscription">
+      <documentation>Re-Activate a suspended subscription</documentation>
+      <wsdl:input message="tns:ReActivateSubscriptionRequest" />
+      <wsdl:output message="tns:ReActivateSubscriptionResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SubscriptionServicesBinding" type="tns:SubscriptionServicesPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CancelSubscription">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/subscription.php/CancelSubscription" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSubscriptionDetail">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/subscription.php/GetSubscriptionDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserSubscriptions">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/subscription.php/GetUserSubscriptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReActivateSubscription">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/subscription.php/ReActivateSubscription" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SubscriptionServices">
+    <wsdl:port name="SubscriptionServicesPort" binding="tns:SubscriptionServicesBinding">
+      <soap:address location="http://iwscommerce.intelius.com/commerce/2.1/subscription.php" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

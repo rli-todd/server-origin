@@ -1,0 +1,8 @@
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+CREATE PROC [dbo].[spUtilPermissionsGrant] AS
+  SET NOCOUNT ON
+  GRANT EXECUTE ON spGpdNodeGet TO api_dev
+GO

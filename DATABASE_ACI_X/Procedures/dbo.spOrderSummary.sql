@@ -1,0 +1,20 @@
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[spOrderSummary]( @OrderDate DATE=NULL) AS
+	SET NOCOUNT ON
+	SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
+	SET @OrderDate=ISNULL(@OrderDate,GETDATE())
+
+SELECT * 
+	FROM vOrderSummary
+	WHERE OrderDate>=DATEADD(day,-14,@OrderDate)
+	AND OrderDate<DATEADD(day,1,@OrderDate)
+	ORDER BY OrderDate DESC
+
+SELECT TOP 100 *
+	FROM vOrderItem
+	WHERE OrderDate >= @OrderDate
+	AND OrderDate<DATEADD(day,1,@OrderDate)
+	ORDER BY OrderDate DESC
+GO

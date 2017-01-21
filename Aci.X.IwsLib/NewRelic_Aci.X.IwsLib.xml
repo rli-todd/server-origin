@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<extension xmlns="urn:newrelic-extension">
+  <instrumentation>
+    <tracerFactory metricName="Custom/IwsQuery">
+      <match assemblyName="Aci.X.IwsLib" className="Aci.X.IwsLib.ProfileClient">
+        <exactMethodMatcher methodName="QueryPreviews" />
+      </match>
+    </tracerFactory>
+    <tracerFactory metricName="Custom/LimitQueryRate">
+      <match assemblyName="Aci.X.IwsLib" className="Aci.X.IwsLib.ProfileHelper">
+        <exactMethodMatcher methodName="LimitQueryRate" />
+      </match>
+    </tracerFactory>
+    <tracerFactory metricName="Custom/ConvertTextJson">
+      <match assemblyName="Aci.X.IwsLib" className="Aci.X.IwsLib.ProfileHelper">
+        <exactMethodMatcher methodName="ConvertTextJson" />
+      </match>
+    </tracerFactory>
+    <tracerFactory metricName="Custom/UncompressString">
+      <match assemblyName="Solishine.CommonLib" className="Solishine.CommonLib.CompressionHelper">
+        <exactMethodMatcher methodName="UncompressString" />
+      </match>
+    </tracerFactory>
+    <tracerFactory metricName="Custom/DeserializeObject">
+      <match assemblyName="Newtonsoft.Json" className="Newtonsoft.Json.JsonConvert">
+        <exactMethodMatcher methodName="DeserializeObject" />
+      </match>
+    </tracerFactory>
+
+  </instrumentation>
+</extension>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configurationSnapshot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:schemas-microsoft-com:xml-wcfconfigurationsnapshot">
+  <behaviors />
+  <bindings>
+    <binding digest="System.ServiceModel.Configuration.BasicHttpBindingElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;Data name=&quot;TransactionServicesBinding&quot; /&gt;" bindingType="basicHttpBinding" name="TransactionServicesBinding" />
+  </bindings>
+  <endpoints>
+    <endpoint normalizedDigest="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;Data address=&quot;http://iwscommerce.intelius.com/commerce/2.1/transaction.php&quot; binding=&quot;basicHttpBinding&quot; bindingConfiguration=&quot;TransactionServicesBinding&quot; contract=&quot;Commerce.v2_1.Transaction.TransactionServicesPortType&quot; name=&quot;TransactionServicesPort&quot; /&gt;" digest="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;Data address=&quot;http://iwscommerce.intelius.com/commerce/2.1/transaction.php&quot; binding=&quot;basicHttpBinding&quot; bindingConfiguration=&quot;TransactionServicesBinding&quot; contract=&quot;Commerce.v2_1.Transaction.TransactionServicesPortType&quot; name=&quot;TransactionServicesPort&quot; /&gt;" contractName="Commerce.v2_1.Transaction.TransactionServicesPortType" name="TransactionServicesPort" />
+  </endpoints>
+</configurationSnapshot>

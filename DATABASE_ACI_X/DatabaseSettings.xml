@@ -1,0 +1,7 @@
+<DatabaseSettings>
+  <Collation>SQL_Latin1_General_CP1_CI_AS</Collation>
+  <ServerVersion>Sql2012</ServerVersion>
+  <ServerName>DB5V</ServerName>
+  <DatabaseName>ACI_X</DatabaseName>
+  <DatabaseInformation Version="1" />
+</DatabaseSettings>

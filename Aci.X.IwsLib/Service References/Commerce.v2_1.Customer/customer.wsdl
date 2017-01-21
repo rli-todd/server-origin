@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="https://api.intelius.com/commerce/2.1/wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="https://api.intelius.com/commerce/2.1/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="https://api.intelius.com/commerce/2.1/wsdl">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xsd:complexType name="ClientAuthType">
+        <xsd:all>
+          <xsd:element name="ClientID" type="xsd:string" />
+          <xsd:element name="AuthID" type="xsd:string" />
+          <xsd:element name="AuthKey" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="LoginRequest">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="UserName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Password" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="RemoteIp" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Login">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="UserName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Password" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="FirstIp" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="LastIp" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="DateLastLogin" type="xsd:date" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="TempPassword" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="PasswordExpire" type="xsd:date" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Email">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="Label" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Primary" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Location" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Address" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfEmails">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Email" type="tns:Email" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Address">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="Label" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Primary" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Location" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Street1" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="City" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="State" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Zip" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Country" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfAddresses">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Address" type="tns:Address" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Phone">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="Label" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Primary" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Location" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Number" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Extension" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfPhones">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Phone" type="tns:Phone" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="WebUrl">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="Label" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Primary" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Location" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Address" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfUrls">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="WebUrl" type="tns:WebUrl" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Channels">
+        <xsd:all>
+          <xsd:element name="Emails" type="tns:ArrayOfEmails" />
+          <xsd:element name="Addresses" type="tns:ArrayOfAddresses" />
+          <xsd:element name="Phones" type="tns:ArrayOfPhones" />
+          <xsd:element name="Urls" type="tns:ArrayOfUrls" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Preference">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="Key" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Value" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfPreferences">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Preference" type="tns:Preference" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Agreement">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="Type" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Name" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="AcceptedDate" type="xsd:date" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ApprovalDate" type="xsd:date" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ApprovedBy" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ExpirationDate" type="xsd:date" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Signature" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Status" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="AgreementList">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Agreement" type="tns:Agreement" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="CreditCard">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="Id" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Primary" type="xsd:boolean" />
+          <xsd:element name="Number" type="xsd:string" />
+          <xsd:element name="CardToken" type="xsd:string" />
+          <xsd:element name="BinNumber" type="xsd:string" />
+          <xsd:element name="LastFour" type="xsd:string" />
+          <xsd:element name="Owner" type="xsd:string" />
+          <xsd:element name="ExpirationYear" type="xsd:string" />
+          <xsd:element name="ExpirationMonth" type="xsd:string" />
+          <xsd:element name="Type" type="xsd:string" />
+          <xsd:element name="BillingAddress" type="tns:Address" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfCreditCards">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="CreditCard" type="tns:CreditCard" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ITunes">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="Id" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="UDID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ReferenceId" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Wallet">
+        <xsd:all>
+          <xsd:element name="CreditCards" type="tns:ArrayOfCreditCards" />
+          <xsd:element name="ITunes" type="tns:ITunes" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="User">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="UserID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="UserToken" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="FirstName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="LastName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="DateCreated" type="xsd:date" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Active" type="xsd:boolean" />
+          <xsd:element name="Login" type="tns:Login" />
+          <xsd:element name="Channels" type="tns:Channels" />
+          <xsd:element name="UserPreferences" type="tns:ArrayOfPreferences" />
+          <xsd:element name="UserAgreements" type="tns:AgreementList" />
+          <xsd:element name="Wallet" type="tns:Wallet" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="CompletionResponseType">
+        <xsd:all>
+          <xsd:element name="CompletionCode" type="xsd:string" />
+          <xsd:element name="ResponseMessage" type="xsd:string" />
+          <xsd:element name="ResponseDetail" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="AuthenticateUserRequestType">
+        <xsd:all>
+          <xsd:element form="qualified" name="ClientAuth" type="tns:ClientAuthType" />
+          <xsd:element form="qualified" name="LoginRequest" type="tns:LoginRequest" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="AuthenticateUserResponseType">
+        <xsd:all>
+          <xsd:element form="qualified" name="User" type="tns:User" />
+          <xsd:element form="qualified" name="CompletionResponse" type="tns:CompletionResponseType" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="RequestContext">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="EndUserIpAddress" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="AccountList" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ChannelType">
+        <xsd:all>
+          <xsd:element name="ChannelID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ChannelAdWord" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="AffiliateReferenceID" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="CreateUserRequestType">
+        <xsd:all>
+          <xsd:element form="qualified" name="ClientAuth" type="tns:ClientAuthType" />
+          <xsd:element minOccurs="0" form="qualified" name="RequestContext" type="tns:RequestContext" />
+          <xsd:element minOccurs="0" form="qualified" name="Channel" type="tns:ChannelType" />
+          <xsd:element form="qualified" name="User" type="tns:User" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="CreateUserResponseType">
+        <xsd:all>
+          <xsd:element form="qualified" name="UserToken" type="xsd:string" />
+          <xsd:element form="qualified" name="CompletionResponse" type="tns:CompletionResponseType" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="IsUserExistRequestType">
+        <xsd:all>
+          <xsd:element form="qualified" name="ClientAuth" type="tns:ClientAuthType" />
+          <xsd:element form="qualified" name="EmailAddress" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="IsUserExistResponseType">
+        <xsd:all>
+          <xsd:element form="qualified" name="CompletionResponse" type="tns:CompletionResponseType" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ResetPasswordRequestType">
+        <xsd:all>
+          <xsd:element form="qualified" name="ClientAuth" type="tns:ClientAuthType" />
+          <xsd:element form="qualified" name="EmailAddress" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ResetPasswordResponseType">
+        <xsd:all>
+          <xsd:element form="qualified" name="TemporaryPassword" type="xsd:string" />
+          <xsd:element form="qualified" name="CompletionResponse" type="tns:CompletionResponseType" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="UpdateCommunicationRequestType">
+        <xsd:all>
+          <xsd:element form="qualified" name="ClientAuth" type="tns:ClientAuthType" />
+          <xsd:element form="qualified" name="UserToken" type="xsd:string" />
+          <xsd:element form="qualified" name="Communication" type="tns:Channels" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="UpdateCommunicationResponseType">
+        <xsd:all>
+          <xsd:element form="qualified" name="CompletionResponse" type="tns:CompletionResponseType" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="UpdatePasswordRequestType">
+        <xsd:all>
+          <xsd:element form="qualified" name="ClientAuth" type="tns:ClientAuthType" />
+          <xsd:element form="qualified" name="UserToken" type="xsd:string" />
+          <xsd:element form="qualified" name="CurrentPassword" type="xsd:string" />
+          <xsd:element form="qualified" name="NewPassword" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="UpdatePasswordResponseType">
+        <xsd:all>
+          <xsd:element form="qualified" name="CompletionResponse" type="tns:CompletionResponseType" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="UpdatePaymentRequestType">
+        <xsd:all>
+          <xsd:element form="qualified" name="ClientAuth" type="tns:ClientAuthType" />
+          <xsd:element form="qualified" name="UserToken" type="xsd:string" />
+          <xsd:element form="qualified" name="Wallet" type="tns:Wallet" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="UpdatePaymentResponseType">
+        <xsd:all>
+          <xsd:element form="qualified" name="CompletionResponse" type="tns:CompletionResponseType" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="UpdateUserRequestType">
+        <xsd:all>
+          <xsd:element form="qualified" name="ClientAuth" type="tns:ClientAuthType" />
+          <xsd:element form="qualified" name="User" type="tns:User" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="UpdateUserResponseType">
+        <xsd:all>
+          <xsd:element form="qualified" name="User" type="tns:User" />
+          <xsd:element form="qualified" name="CompletionResponse" type="tns:CompletionResponseType" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:element name="AuthenticateUser" type="tns:AuthenticateUserRequestType" />
+      <xsd:element name="AuthenticateUserResponse" type="tns:AuthenticateUserResponseType" />
+      <xsd:element name="CreateUser" type="tns:CreateUserRequestType" />
+      <xsd:element name="CreateUserResponse" type="tns:CreateUserResponseType" />
+      <xsd:element name="IsUserExist" type="tns:IsUserExistRequestType" />
+      <xsd:element name="IsUserExistResponse" type="tns:IsUserExistResponseType" />
+      <xsd:element name="ResetPassword" type="tns:ResetPasswordRequestType" />
+      <xsd:element name="ResetPasswordResponse" type="tns:ResetPasswordResponseType" />
+      <xsd:element name="UpdateCommunication" type="tns:UpdateCommunicationRequestType" />
+      <xsd:element name="UpdateCommunicationResponse" type="tns:UpdateCommunicationResponseType" />
+      <xsd:element name="UpdatePassword" type="tns:UpdatePasswordRequestType" />
+      <xsd:element name="UpdatePasswordResponse" type="tns:UpdatePasswordResponseType" />
+      <xsd:element name="UpdatePayment" type="tns:UpdatePaymentRequestType" />
+      <xsd:element name="UpdatePaymentResponse" type="tns:UpdatePaymentResponseType" />
+      <xsd:element name="UpdateUser" type="tns:UpdateUserRequestType" />
+      <xsd:element name="UpdateUserResponse" type="tns:UpdateUserResponseType" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="AuthenticateUserRequest">
+    <wsdl:part name="parameters" element="tns:AuthenticateUser" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateUserResponse">
+    <wsdl:part name="parameters" element="tns:AuthenticateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateUserRequest">
+    <wsdl:part name="parameters" element="tns:CreateUser" />
+  </wsdl:message>
+  <wsdl:message name="CreateUserResponse">
+    <wsdl:part name="parameters" element="tns:CreateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsUserExistRequest">
+    <wsdl:part name="parameters" element="tns:IsUserExist" />
+  </wsdl:message>
+  <wsdl:message name="IsUserExistResponse">
+    <wsdl:part name="parameters" element="tns:IsUserExistResponse" />
+  </wsdl:message>
+  <wsdl:message name="ResetPasswordRequest">
+    <wsdl:part name="parameters" element="tns:ResetPassword" />
+  </wsdl:message>
+  <wsdl:message name="ResetPasswordResponse">
+    <wsdl:part name="parameters" element="tns:ResetPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCommunicationRequest">
+    <wsdl:part name="parameters" element="tns:UpdateCommunication" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCommunicationResponse">
+    <wsdl:part name="parameters" element="tns:UpdateCommunicationResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePasswordRequest">
+    <wsdl:part name="parameters" element="tns:UpdatePassword" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePasswordResponse">
+    <wsdl:part name="parameters" element="tns:UpdatePasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePaymentRequest">
+    <wsdl:part name="parameters" element="tns:UpdatePayment" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePaymentResponse">
+    <wsdl:part name="parameters" element="tns:UpdatePaymentResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateUserRequest">
+    <wsdl:part name="parameters" element="tns:UpdateUser" />
+  </wsdl:message>
+  <wsdl:message name="UpdateUserResponse">
+    <wsdl:part name="parameters" element="tns:UpdateUserResponse" />
+  </wsdl:message>
+  <wsdl:portType name="AccountServicesPortType">
+    <wsdl:operation name="AuthenticateUser">
+      <documentation>Function used to authenticate user using login credentials and get the user information</documentation>
+      <wsdl:input message="tns:AuthenticateUserRequest" />
+      <wsdl:output message="tns:AuthenticateUserResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateUser">
+      <documentation>Function used to create user</documentation>
+      <wsdl:input message="tns:CreateUserRequest" />
+      <wsdl:output message="tns:CreateUserResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="IsUserExist">
+      <documentation>Function used to check the given user name exist in the system</documentation>
+      <wsdl:input message="tns:IsUserExistRequest" />
+      <wsdl:output message="tns:IsUserExistResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ResetPassword">
+      <documentation>Function used to retrieve the forgotten password</documentation>
+      <wsdl:input message="tns:ResetPasswordRequest" />
+      <wsdl:output message="tns:ResetPasswordResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCommunication">
+      <documentation>Function used to update the user adderss, email and phone numbers</documentation>
+      <wsdl:input message="tns:UpdateCommunicationRequest" />
+      <wsdl:output message="tns:UpdateCommunicationResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePassword">
+      <documentation>Function used to update the user password with the new password</documentation>
+      <wsdl:input message="tns:UpdatePasswordRequest" />
+      <wsdl:output message="tns:UpdatePasswordResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePayment">
+      <documentation>Function used to update the user</documentation>
+      <wsdl:input message="tns:UpdatePaymentRequest" />
+      <wsdl:output message="tns:UpdatePaymentResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUser">
+      <documentation>Function used to update the user</documentation>
+      <wsdl:input message="tns:UpdateUserRequest" />
+      <wsdl:output message="tns:UpdateUserResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AccountServicesBinding" type="tns:AccountServicesPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AuthenticateUser">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/customer.php/AuthenticateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUser">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/customer.php/CreateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsUserExist">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/customer.php/IsUserExist" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResetPassword">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/customer.php/ResetPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCommunication">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/customer.php/UpdateCommunication" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePassword">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/customer.php/UpdatePassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePayment">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/customer.php/UpdatePayment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUser">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/customer.php/UpdateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AccountServices">
+    <wsdl:port name="AccountServicesPort" binding="tns:AccountServicesBinding">
+      <soap:address location="http://iwscommerce.intelius.com/commerce/2.1/customer.php" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

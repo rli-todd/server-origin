@@ -1,0 +1,660 @@
+﻿<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="/wsdl/wsdl-viewer.xsl" ?>
+<definitions targetNamespace="https://api.intelius.com/commerce/2.1/wsdl"
+xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+xmlns:tns="https://api.intelius.com/commerce/2.1/wsdl"
+xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+>
+  <types>
+    <xsd:schema elementFormDefault="qualified" attributeFormDefault="qualified" targetNamespace="https://api.intelius.com/commerce/2.1/wsdl">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xsd:complexType name="ClientAuthType">
+        <xsd:all>
+          <xsd:element name="ClientID" type="xsd:string" />
+          <xsd:element name="AuthID" type="xsd:string" />
+          <xsd:element name="AuthKey" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="RequestContext">
+        <xsd:all>
+          <xsd:element name="EndUserIpAddress" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="AccountList" type="xsd:string" minOccurs="0" maxOccurs="1" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="RequestReferenceType">
+        <xsd:all>
+          <xsd:element name="RequestReferenceID" type="xsd:string" />
+          <xsd:element name="AgreedEULA" type="xsd:string" />
+          <xsd:element name="ChannelID" type="xsd:string" />
+          <xsd:element name="AffiliateID" type="xsd:string" />
+          <xsd:element name="TxnReferenceID" type="xsd:string" />
+          <xsd:element name="Version" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="UserContextType">
+        <xsd:all>
+          <xsd:element name="UserToken" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="EmailAddress" type="xsd:string" minOccurs="0" maxOccurs="1" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ChannelType">
+        <xsd:all>
+          <xsd:element name="ChannelID" type="xsd:int" />
+          <xsd:element name="ChannelAdWord" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="AffiliateReferenceID" type="xsd:string" minOccurs="0" maxOccurs="1" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="CompletionResponseType">
+        <xsd:all>
+          <xsd:element name="CompletionCode" type="xsd:string" />
+          <xsd:element name="ResponseMessage" type="xsd:string" />
+          <xsd:element name="ResponseDetail" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ResultCodes">
+        <xsd:sequence>
+          <xsd:element name="Code" type="tns:EnumerationOfCode" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="TransactionResult">
+        <xsd:all>
+          <xsd:element name="isSuccess" type="xsd:boolean" />
+          <xsd:element name="ResultString" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="ResultCodes" type="tns:ResultCodes" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="SessionType">
+        <xsd:all>
+          <xsd:element name="RemoteIP" type="xsd:string" />
+          <xsd:element name="UserAgent" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="SessionReference" type="xsd:string" minOccurs="0" maxOccurs="1" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="OrderItemDiscountDetailType">
+        <xsd:all>
+          <xsd:element name="PricingCode" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Discount" type="xsd:decimal" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Price" type="xsd:decimal" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="PurchaseSubText" type="xsd:string" minOccurs="0" maxOccurs="1" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfDiscount">
+        <xsd:sequence>
+          <xsd:element name="DiscountDetail" type="tns:OrderItemDiscountDetailType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="PeriodType">
+        <xsd:all>
+          <xsd:element name="PeriodID" type="xsd:int" />
+          <xsd:element name="ServiceGroupID" type="xsd:int" />
+          <xsd:element name="StartDate" type="xsd:dateTime" />
+          <xsd:element name="EndDate" type="xsd:dateTime" />
+          <xsd:element name="PreviousPeriodID" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="StatusCode" type="xsd:string" />
+          <xsd:element name="Status" type="xsd:string" />
+          <xsd:element name="Trial" type="xsd:string" />
+          <xsd:element name="PeriodOrderID" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfPeriod">
+        <xsd:sequence>
+          <xsd:element name="Period" type="tns:PeriodType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="SubcriptionType">
+        <xsd:all>
+          <xsd:element name="SubscriptionID" type="xsd:int" />
+          <xsd:element name="ServiceID" type="xsd:int" />
+          <xsd:element name="UserID" type="xsd:int" />
+          <xsd:element name="SubscriptionName" type="xsd:string" />
+          <xsd:element name="EnrollmentDate" type="xsd:dateTime" />
+          <xsd:element name="Status" type="xsd:string" />
+          <xsd:element name="StatusCode" type="xsd:string" />
+          <xsd:element name="StatusChangeDate" type="xsd:dateTime" />
+          <xsd:element name="Periods" type="tns:ArrayOfPeriod" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="OrderItemType">
+        <xsd:all>
+          <xsd:element name="OrderID" type="xsd:int" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="OrderItemID" type="xsd:int" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="OrderItemDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="ProductID" type="xsd:int" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="ReferenceID" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="ParentReferenceID" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="ProductTitle" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Quantity" type="xsd:int" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="MSRPPrice" type="xsd:decimal" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Price" type="xsd:decimal" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="TaxAmount" type="xsd:decimal" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="UnitsSold" type="xsd:decimal" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="OrderItemIDActive" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="ParentOrderItemID" type="xsd:int" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="OriginalOrderItemID" type="xsd:int" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="OriginalOrderID" type="xsd:int" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="DeliveryStartDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="DeliveryEndDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="ProductReferenceID" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Discounts" type="tns:ArrayOfDiscount" />
+          <xsd:element name="Subscription" type="tns:SubcriptionType" minOccurs="0" maxOccurs="1" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfOrderItem">
+        <xsd:sequence>
+          <xsd:element name="OrderItem" type="tns:OrderItemType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="PaymentType">
+        <xsd:all>
+          <xsd:element name="PaymentType" type="xsd:string" />
+          <xsd:element name="PaymentID" type="xsd:int" />
+          <xsd:element name="PaymentDate" type="xsd:date" />
+          <xsd:element name="Status" type="xsd:string" />
+          <xsd:element name="PaymentReferenceText" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="ProcessorResponseText" type="xsd:string" minOccurs="0" maxOccurs="1" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfPayments">
+        <xsd:sequence>
+          <xsd:element name="Payment" type="tns:PaymentType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Name">
+        <xsd:all>
+          <xsd:element name="FirstName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="LastName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="MiddleName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="FullName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Suffix" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Prefix" type="xsd:string" minOccurs="0" maxOccurs="1" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Address">
+        <xsd:all>
+          <xsd:element name="StreetNumber" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="StreetName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="StreetPreDirection" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="StreetPostDirection" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="StreetSuffix" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="UnitNumber" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="StreetAddress1" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="StreetAddress2" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="City" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="State" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="County" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Country" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Zip5" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Zip4" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="PostalCode" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="FirstSeenDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="LastSeenDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Latitude" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Longitude" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="LatLonPrecision" type="xsd:int" minOccurs="0" maxOccurs="1" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfAlias">
+        <xsd:sequence>
+          <xsd:element name="Alias" type="tns:Name" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfAddress">
+        <xsd:sequence>
+          <xsd:element name="Address" type="tns:Address" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Phone">
+        <xsd:all>
+          <xsd:element name="CountryCode" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="AreaCode" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="County" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Exchange" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="PhoneNumber" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="FullPhoneNumber" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="FormattedNumber" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Carrier" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="TimeZone" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="ConnectionType" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Latitude" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Longitude" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="NameOnPhone" type="tns:Name" minOccurs="0" maxOccurs="1" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfPhone">
+        <xsd:sequence>
+          <xsd:element name="Phone" type="tns:Phone" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfEmailAddress">
+        <xsd:sequence>
+          <xsd:element name="EmailAddress" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfDOB">
+        <xsd:sequence>
+          <xsd:element name="DOB" type="xsd:date" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfAge">
+        <xsd:sequence>
+          <xsd:element name="Age" type="xsd:int" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfPicture">
+        <xsd:sequence>
+          <xsd:element name="Picture" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="PhysicalCharacteristics">
+        <xsd:all>
+          <xsd:element name="Gender" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Height" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Weight" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="HairColor" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="EyeColor" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Race" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Ethnicity" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="SkinColor" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="PhysicalBuild" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="BloodType" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="BodyMarks" type="xsd:string" minOccurs="0" maxOccurs="1" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Person">
+        <xsd:all>
+          <xsd:element name="Name" type="tns:Name" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Address" type="tns:Address" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="DateOfBirth" type="xsd:date" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="SSN" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Aliases" type="tns:ArrayOfAlias" />
+          <xsd:element name="Addresses" type="tns:ArrayOfAddress" />
+          <xsd:element name="Phones" type="tns:ArrayOfPhone" />
+          <xsd:element name="EmailAddresses" type="tns:ArrayOfEmailAddress" />
+          <xsd:element name="DOBs" type="tns:ArrayOfDOB" />
+          <xsd:element name="Ages" type="tns:ArrayOfAge" />
+          <xsd:element name="Pictures" type="tns:ArrayOfPicture" />
+          <xsd:element name="PhysicalCharacteristics" type="tns:PhysicalCharacteristics" />
+          <xsd:element name="Relatives" type="tns:ArrayOfRelative" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfRelative">
+        <xsd:sequence>
+          <xsd:element name="Relative" type="tns:Person" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Option">
+        <xsd:all>
+          <xsd:element name="Key" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Value" type="xsd:string" minOccurs="0" maxOccurs="1" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfOption">
+        <xsd:sequence>
+          <xsd:element name="Option" type="tns:Option" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="SearchOption">
+        <xsd:all>
+          <xsd:element name="ScreenName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="PaidReport" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="PCS" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="MultipleAddress" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="ExampleMode" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="StartIndex" type="xsd:int" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="LimitRecords" type="xsd:int" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Options" type="tns:ArrayOfOption" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ComplexSearchCriteria">
+        <xsd:all>
+          <xsd:element name="ProfileID" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Name" type="tns:Name" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Address" type="tns:Address" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Person" type="tns:Person" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Phone" type="tns:Phone" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="EmailAddress" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="DateOfBirth" type="xsd:date" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="RecordID" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="SearchOption" type="tns:SearchOption" minOccurs="0" maxOccurs="1" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ReportType">
+        <xsd:all>
+          <xsd:element name="ReportID" type="xsd:int" />
+          <xsd:element name="OrderID" type="xsd:int" />
+          <xsd:element name="OrderItemID" type="xsd:int" />
+          <xsd:element name="ReportTypeID" type="xsd:string" />
+          <xsd:element name="ReportDate" type="xsd:dateTime" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Status" type="xsd:string" />
+          <xsd:element name="SearchCriteria" type="tns:ComplexSearchCriteria" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfReports">
+        <xsd:sequence>
+          <xsd:element name="Report" type="tns:ReportType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="OrderType">
+        <xsd:all>
+          <xsd:element name="OrderID" type="xsd:int" />
+          <xsd:element name="OrderDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="UserID" type="xsd:int" />
+          <xsd:element name="Channel" type="tns:ChannelType" />
+          <xsd:element name="NetPrice" type="xsd:decimal" />
+          <xsd:element name="Session" type="tns:SessionType" />
+          <xsd:element name="OrderItems" type="tns:ArrayOfOrderItem" />
+          <xsd:element name="Payments" type="tns:ArrayOfPayments" />
+          <xsd:element name="Reports" type="tns:ArrayOfReports" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="CreateOrderRequestType">
+        <xsd:all>
+          <xsd:element name="ClientAuth" type="tns:ClientAuthType" form="qualified" />
+          <xsd:element name="RequestContext" type="tns:RequestContext" form="qualified" minOccurs="0" />
+          <xsd:element name="RequestReference" type="tns:RequestReferenceType" form="qualified" minOccurs="0" />
+          <xsd:element name="UserContext" type="tns:UserContextType" form="qualified" />
+          <xsd:element name="Channel" type="tns:ChannelType" form="qualified" />
+          <xsd:element name="OrderHash" type="xsd:string" form="qualified" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="CreateOrderResponseType">
+        <xsd:all>
+          <xsd:element name="RequestReferenceID" type="xsd:string" form="qualified" />
+          <xsd:element name="CompletionResponse" type="tns:CompletionResponseType" form="qualified" />
+          <xsd:element name="TransactionResult" type="tns:TransactionResult" form="qualified" />
+          <xsd:element name="Order" type="tns:OrderType" form="qualified" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Addon">
+        <xsd:all>
+          <xsd:element name="PackageID" type="xsd:int" />
+          <xsd:element name="ReportTypeID" type="xsd:int" />
+          <xsd:element name="ReportTypeName" type="xsd:string" />
+          <xsd:element name="Title" type="xsd:string" />
+          <xsd:element name="ShortTitle" type="xsd:string" />
+          <xsd:element name="ReportComponentID" type="xsd:string" />
+          <xsd:element name="ReportComponentName" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfAddons">
+        <xsd:sequence>
+          <xsd:element name="Addon" type="tns:Addon" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Credit">
+        <xsd:all>
+          <xsd:element name="PackageID" type="xsd:int" />
+          <xsd:element name="ReportTypeID" type="xsd:int" />
+          <xsd:element name="ReportTypeName" type="xsd:string" />
+          <xsd:element name="Title" type="xsd:string" />
+          <xsd:element name="ShortTitle" type="xsd:string" />
+          <xsd:element name="ReportComponentID" type="xsd:string" />
+          <xsd:element name="ReportComponentName" type="xsd:string" />
+          <xsd:element name="Units" type="xsd:int" />
+          <xsd:element name="UserID" type="xsd:int" />
+          <xsd:element name="TxnID" type="xsd:int" />
+          <xsd:element name="PurchaseID" type="xsd:int" />
+          <xsd:element name="UnitsUsed" type="xsd:int" />
+          <xsd:element name="UnitsLeft" type="xsd:int" />
+          <xsd:element name="StartDate" type="xsd:dateTime" />
+          <xsd:element name="EndDate" type="xsd:dateTime" />
+          <xsd:element name="Addons" type="tns:ArrayOfAddons" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfCredits">
+        <xsd:sequence>
+          <xsd:element name="Credit" type="tns:Credit" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="GetCreditsRequestType">
+        <xsd:all>
+          <xsd:element name="ClientAuth" type="tns:ClientAuthType" form="qualified" />
+          <xsd:element name="UserID" type="xsd:int" form="qualified" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="GetCreditsResponseType">
+        <xsd:all>
+          <xsd:element name="CompletionResponse" type="tns:CompletionResponseType" form="qualified" />
+          <xsd:element name="Credits" type="tns:ArrayOfCredits" form="qualified" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="GetOrderDetailRequestType">
+        <xsd:all>
+          <xsd:element name="ClientAuth" type="tns:ClientAuthType" form="qualified" />
+          <xsd:element name="UserContext" type="tns:UserContextType" form="qualified" />
+          <xsd:element name="OrderID" type="xsd:int" form="qualified" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="GetOrderDetailResponseType">
+        <xsd:all>
+          <xsd:element name="RequestReferenceID" type="xsd:string" form="qualified" />
+          <xsd:element name="CompletionResponse" type="tns:CompletionResponseType" form="qualified" />
+          <xsd:element name="Order" type="tns:OrderType" form="qualified" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfOrder">
+        <xsd:sequence>
+          <xsd:element name="Order" type="tns:OrderType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="GetPurchaseHistoryRequestType">
+        <xsd:all>
+          <xsd:element name="ClientAuth" type="tns:ClientAuthType" form="qualified" />
+          <xsd:element name="UserContext" type="tns:UserContextType" form="qualified" />
+          <xsd:element name="DateFrom" type="xsd:dateTime" form="qualified" minOccurs="0" />
+          <xsd:element name="DateTo" type="xsd:dateTime" form="qualified" minOccurs="0" />
+          <xsd:element name="StartIndex" type="xsd:int" form="qualified" />
+          <xsd:element name="PageSize" type="xsd:int" form="qualified" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="GetPurchaseHistoryResponseType">
+        <xsd:all>
+          <xsd:element name="RequestReferenceID" type="xsd:string" form="qualified" />
+          <xsd:element name="CompletionResponse" type="tns:CompletionResponseType" form="qualified" />
+          <xsd:element name="OrderHistory" type="tns:ArrayOfOrder" form="qualified" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="PurchaseContextType">
+        <xsd:all>
+          <xsd:element name="RemoteIP" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="UserAgent" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Language" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="TimeZone" type="xsd:int" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="ClientTime" type="xsd:dateTime" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="OrderLocation" type="xsd:string" minOccurs="0" maxOccurs="1" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="DiscountType">
+        <xsd:all>
+          <xsd:element name="Text" type="xsd:string" />
+          <xsd:element name="Price" type="xsd:decimal" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="PurchaseItemType">
+        <xsd:all>
+          <xsd:element name="ProductID" type="xsd:int" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="ReferenceID" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="ParentReferenceID" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="ShortTitle" type="xsd:string" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Quantity" type="xsd:int" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Duration" type="xsd:int" minOccurs="0" maxOccurs="1" />
+          <xsd:element name="Discount" type="tns:DiscountType" minOccurs="0" maxOccurs="1" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="PurchaseItemListType">
+        <xsd:sequence>
+          <xsd:element name="PurchaseItem" type="tns:PurchaseItemType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="AnonymousType_0001">
+        <xsd:all>
+          <xsd:element name="Subtotal" type="xsd:decimal" />
+          <xsd:element name="TotalTax" type="xsd:decimal" />
+          <xsd:element name="TotalAmount" type="xsd:decimal" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ValidateOrderRequestType">
+        <xsd:all>
+          <xsd:element name="ClientAuth" type="tns:ClientAuthType" form="qualified" />
+          <xsd:element name="RequestContext" type="tns:RequestContext" form="qualified" minOccurs="0" />
+          <xsd:element name="UserContext" type="tns:UserContextType" form="qualified" />
+          <xsd:element name="Channel" type="tns:ChannelType" form="qualified" />
+          <xsd:element name="CVV" type="xsd:string" form="qualified" minOccurs="0" />
+          <xsd:element name="PurchaseContext" type="tns:PurchaseContextType" form="qualified" />
+          <xsd:element name="PurchaseItemList" type="tns:PurchaseItemListType" form="qualified" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ValidateOrderResponseType">
+        <xsd:all>
+          <xsd:element name="RequestReferenceID" type="xsd:string" form="qualified" />
+          <xsd:element name="CompletionResponse" type="tns:CompletionResponseType" form="qualified" />
+          <xsd:element name="OrderItems" type="tns:ArrayOfOrderItem" form="qualified" />
+          <xsd:element name="OrderTotals" type="tns:AnonymousType_0001" form="qualified" />
+          <xsd:element name="OrderHash" type="xsd:string" form="qualified" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:simpleType name="EnumerationOfCode">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="SUCCESS" />
+          <xsd:enumeration value="GENERAL" />
+          <xsd:enumeration value="CART_FAILURE" />
+          <xsd:enumeration value="CART_EMPTY" />
+          <xsd:enumeration value="NO_PAYMENT_METHOD" />
+          <xsd:enumeration value="DECLINE" />
+          <xsd:enumeration value="DECLINE_FRAUDSCORE_FAILURE_PRETRANSACT" />
+          <xsd:enumeration value="DECLINE_FRAUDSCORE_FAILURE_POSTTRANSACT" />
+          <xsd:enumeration value="DECLINE_INVALID_CC" />
+          <xsd:enumeration value="DECLINE_CVV" />
+          <xsd:enumeration value="DECLINE_EXPIRATION" />
+          <xsd:enumeration value="DECLINE_INSUFFICIENT_FUNDS" />
+          <xsd:enumeration value="DECLINE_ALREADYINSERVICE" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:element name="CreateOrder" type="tns:CreateOrderRequestType" />
+      <xsd:element name="CreateOrderResponse" type="tns:CreateOrderResponseType" />
+      <xsd:element name="GetCredits" type="tns:GetCreditsRequestType" />
+      <xsd:element name="GetCreditsResponse" type="tns:GetCreditsResponseType" />
+      <xsd:element name="GetOrderDetail" type="tns:GetOrderDetailRequestType" />
+      <xsd:element name="GetOrderDetailResponse" type="tns:GetOrderDetailResponseType" />
+      <xsd:element name="GetPurchaseHistory" type="tns:GetPurchaseHistoryRequestType" />
+      <xsd:element name="GetPurchaseHistoryResponse" type="tns:GetPurchaseHistoryResponseType" />
+      <xsd:element name="ValidateOrder" type="tns:ValidateOrderRequestType" />
+      <xsd:element name="ValidateOrderResponse" type="tns:ValidateOrderResponseType" />
+    </xsd:schema>
+  </types>
+  <message name="CreateOrderRequest">
+    <part name="parameters" element="tns:CreateOrder" />
+  </message>
+  <message name="CreateOrderResponse">
+    <part name="parameters" element="tns:CreateOrderResponse" />
+  </message>
+  <message name="GetCreditsRequest">
+    <part name="parameters" element="tns:GetCredits" />
+  </message>
+  <message name="GetCreditsResponse">
+    <part name="parameters" element="tns:GetCreditsResponse" />
+  </message>
+  <message name="GetOrderDetailRequest">
+    <part name="parameters" element="tns:GetOrderDetail" />
+  </message>
+  <message name="GetOrderDetailResponse">
+    <part name="parameters" element="tns:GetOrderDetailResponse" />
+  </message>
+  <message name="GetPurchaseHistoryRequest">
+    <part name="parameters" element="tns:GetPurchaseHistory" />
+  </message>
+  <message name="GetPurchaseHistoryResponse">
+    <part name="parameters" element="tns:GetPurchaseHistoryResponse" />
+  </message>
+  <message name="ValidateOrderRequest">
+    <part name="parameters" element="tns:ValidateOrder" />
+  </message>
+  <message name="ValidateOrderResponse">
+    <part name="parameters" element="tns:ValidateOrderResponse" />
+  </message>
+  <portType name="TransactionServicesPortType">
+    <operation name="CreateOrder">
+      <documentation>Takes in a valid OrderHash (returned from validateorder operation), injects orders and on success returns valid order context</documentation>
+      <input message="tns:CreateOrderRequest" />
+      <output message="tns:CreateOrderResponse" />
+    </operation>
+    <operation name="GetCredits">
+      <documentation>Returns list of all active orders (with credits remaining) and services for a user</documentation>
+      <input message="tns:GetCreditsRequest" />
+      <output message="tns:GetCreditsResponse" />
+    </operation>
+    <operation name="GetOrderDetail">
+      <documentation>Validates a Transaction Order bundle and returns a encrypted serialized bundle hash on success</documentation>
+      <input message="tns:GetOrderDetailRequest" />
+      <output message="tns:GetOrderDetailResponse" />
+    </operation>
+    <operation name="GetPurchaseHistory">
+      <documentation>Return the purchase history of the user till date</documentation>
+      <input message="tns:GetPurchaseHistoryRequest" />
+      <output message="tns:GetPurchaseHistoryResponse" />
+    </operation>
+    <operation name="ValidateOrder">
+      <documentation>Validates a Transaction Order bundle and returns a encrypted serialized bundle hash on success. The purchase context remote IP has been deprecated.</documentation>
+      <input message="tns:ValidateOrderRequest" />
+      <output message="tns:ValidateOrderResponse" />
+    </operation>
+  </portType>
+  <binding name="TransactionServicesBinding" type="tns:TransactionServicesPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="CreateOrder">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/transaction.php/CreateOrder" style="document" />
+      <input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </output>
+    </operation>
+    <operation name="GetCredits">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/transaction.php/GetCredits" style="document" />
+      <input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </output>
+    </operation>
+    <operation name="GetOrderDetail">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/transaction.php/GetOrderDetail" style="document" />
+      <input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </output>
+    </operation>
+    <operation name="GetPurchaseHistory">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/transaction.php/GetPurchaseHistory" style="document" />
+      <input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </output>
+    </operation>
+    <operation name="ValidateOrder">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/transaction.php/ValidateOrder" style="document" />
+      <input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </output>
+    </operation>
+  </binding>
+  <service name="TransactionServices">
+    <port name="TransactionServicesPort" binding="tns:TransactionServicesBinding">
+      <soap:address location="http://iwscommerce.intelius.com/commerce/2.1/transaction.php" />
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,10 @@
+CREATE TABLE [dbo].[Company]
+(
+[ID] [int] NOT NULL IDENTITY(1, 1),
+[CompanyName] [nvarchar] (128) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Company] ADD CONSTRAINT [PK_Company] PRIMARY KEY CLUSTERED  ([ID]) ON [PRIMARY]
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [IX_Company] ON [dbo].[Company] ([CompanyName]) INCLUDE ([ID]) ON [PRIMARY]
+GO

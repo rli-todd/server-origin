@@ -1,0 +1,92 @@
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[spPrint](
+	@P1 NVARCHAR(MAX)='',
+	@P2 NVARCHAR(MAX)='',
+	@P3 NVARCHAR(MAX)='',
+	@P4 NVARCHAR(MAX)='',
+	@P5 NVARCHAR(MAX)='',
+	@P6 NVARCHAR(MAX)='',
+	@P7 NVARCHAR(MAX)='',
+	@P8 NVARCHAR(MAX)='',
+	@P9 NVARCHAR(MAX)='',
+	@P10 NVARCHAR(MAX)='',
+	@P11 NVARCHAR(MAX)='',
+	@P12 NVARCHAR(MAX)='',
+	@P13 NVARCHAR(MAX)='',
+	@P14 NVARCHAR(MAX)='',
+	@P15 NVARCHAR(MAX)='',
+	@P16 NVARCHAR(MAX)='',
+	@P17 NVARCHAR(MAX)='',
+	@P18 NVARCHAR(MAX)='',
+	@P19 NVARCHAR(MAX)='',
+	@P20 NVARCHAR(MAX)='',
+	@P21 NVARCHAR(MAX)='',
+	@P22 NVARCHAR(MAX)='',
+	@P23 NVARCHAR(MAX)='',
+	@P24 NVARCHAR(MAX)='',
+	@P25 NVARCHAR(MAX)='',
+	@P26 NVARCHAR(MAX)='',
+	@P27 NVARCHAR(MAX)='',
+	@P28 NVARCHAR(MAX)='',
+	@P29 NVARCHAR(MAX)='',
+	@P30 NVARCHAR(MAX)=''	
+	) AS
+	SET NOCOUNT ON
+	
+	SET ANSI_WARNINGS OFF -- suppress "String or binary data would be truncated" message
+	DECLARE @Message NVARCHAR(MAX)
+	DECLARE @Part NVARCHAR(2000)
+	DECLARE @LenMessage INT
+	DECLARE @LenPart INT
+	DECLARE @MaxPartLen INT
+	SET @MaxPartLen=1000
+	SET @Message = 
+		ISNULL(@P1,'NULL')+
+		ISNULL(@P2,'NULL')+
+		ISNULL(@P3,'NULL')+
+		ISNULL(@P4,'NULL')+
+		ISNULL(@P5,'NULL')+
+		ISNULL(@P6,'NULL')+
+		ISNULL(@P7,'NULL')+
+		ISNULL(@P8,'NULL')+
+		ISNULL(@P9,'NULL')+
+		ISNULL(@P10,'NULL')+
+		ISNULL(@P11,'NULL')+
+		ISNULL(@P12,'NULL')+
+		ISNULL(@P13,'NULL')+
+		ISNULL(@P14,'NULL')+
+		ISNULL(@P15,'NULL')+
+		ISNULL(@P16,'NULL')+
+		ISNULL(@P17,'NULL')+
+		ISNULL(@P18,'NULL')+
+		ISNULL(@P19,'NULL')+
+		ISNULL(@P20,'NULL')+
+		ISNULL(@P21,'NULL')+
+		ISNULL(@P22,'NULL')+
+		ISNULL(@P23,'NULL')+
+		ISNULL(@P24,'NULL')+
+		ISNULL(@P25,'NULL')+
+		ISNULL(@P26,'NULL')+
+		ISNULL(@P27,'NULL')+
+		ISNULL(@P28,'NULL')+
+		ISNULL(@P29,'NULL')+
+		ISNULL(@P30,'NULL')
+--	INSERT INTO SqlPrintLog(LogDate,Message)VALUES(GETDATE(),@Message)
+	SET @Message = CONVERT(NVARCHAR,GETDATE(),14)+': '+@Message
+	SET @LenMessage = LEN(@Message)
+	WHILE @LenMessage > 0 BEGIN
+		SELECT @LenPart = CASE WHEN @LenMessage > @MaxPartLen THEN @MaxPartLen ELSE @LenMessage END
+		WHILE(@LenMessage>@LenPart AND SUBSTRING(@Message,@LenPart,1) NOT IN (' ',CHAR(10),CHAR(13),CHAR(9)))
+			SET @LenPart=@LenPart+1
+		SELECT @Part=SUBSTRING(@Message,1,@LenPart)
+		RAISERROR (@Part, 0, 1) WITH NOWAIT;
+		SELECT @Message = CASE WHEN @LenMessage>@LenPart THEN SUBSTRING(@Message,@LenPart+1,@LenMessage-@LenPart) ELSE '' END
+		SELECT @LenMessage=LEN(@Message)	
+	END
+
+
+
+
+GO

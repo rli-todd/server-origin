@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="https://api.intelius.com/commerce/2.1/wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="https://api.intelius.com/commerce/2.1/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="https://api.intelius.com/commerce/2.1/wsdl">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xsd:complexType name="ClientAuthType">
+        <xsd:all>
+          <xsd:element name="ClientID" type="xsd:string" />
+          <xsd:element name="AuthID" type="xsd:string" />
+          <xsd:element name="AuthKey" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="CompletionResponseType">
+        <xsd:all>
+          <xsd:element name="CompletionCode" type="xsd:string" />
+          <xsd:element name="ResponseMessage" type="xsd:string" />
+          <xsd:element name="ResponseDetail" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ProtectCreditCardRequestType">
+        <xsd:all>
+          <xsd:element form="qualified" name="ClientAuth" type="tns:ClientAuthType" />
+          <xsd:element form="qualified" name="CreditCard" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ProtectCreditCardResponseType">
+        <xsd:all>
+          <xsd:element form="qualified" name="CompletionResponse" type="tns:CompletionResponseType" />
+          <xsd:element form="qualified" name="Token" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="AuthContextType">
+        <xsd:all>
+          <xsd:element name="PartnerID" type="xsd:int" />
+          <xsd:element name="AuthID" type="xsd:string" />
+          <xsd:element name="AuthKey" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ResponseDetailType">
+        <xsd:all>
+          <xsd:element name="Message" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="SubCode" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Detail" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="RetrievePartnerFormRequestType">
+        <xsd:all>
+          <xsd:element form="qualified" name="AuthContext" type="tns:AuthContextType" />
+          <xsd:element form="qualified" name="AccessToken" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="RetrievePartnerFormResponseType">
+        <xsd:all>
+          <xsd:element form="qualified" name="ResponseCode" type="xsd:int" />
+          <xsd:element form="qualified" name="ResponseDetail" type="tns:ResponseDetailType" />
+          <xsd:element form="qualified" name="Payload" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:element name="ProtectCreditCard" type="tns:ProtectCreditCardRequestType" />
+      <xsd:element name="ProtectCreditCardResponse" type="tns:ProtectCreditCardResponseType" />
+      <xsd:element name="RetrievePartnerForm" type="tns:RetrievePartnerFormRequestType" />
+      <xsd:element name="RetrievePartnerFormResponse" type="tns:RetrievePartnerFormResponseType" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ProtectCreditCardRequest">
+    <wsdl:part name="parameters" element="tns:ProtectCreditCard" />
+  </wsdl:message>
+  <wsdl:message name="ProtectCreditCardResponse">
+    <wsdl:part name="parameters" element="tns:ProtectCreditCardResponse" />
+  </wsdl:message>
+  <wsdl:message name="RetrievePartnerFormRequest">
+    <wsdl:part name="parameters" element="tns:RetrievePartnerForm" />
+  </wsdl:message>
+  <wsdl:message name="RetrievePartnerFormResponse">
+    <wsdl:part name="parameters" element="tns:RetrievePartnerFormResponse" />
+  </wsdl:message>
+  <wsdl:portType name="TokenServicesPortType">
+    <wsdl:operation name="ProtectCreditCard">
+      <documentation>Tokenization service</documentation>
+      <wsdl:input message="tns:ProtectCreditCardRequest" />
+      <wsdl:output message="tns:ProtectCreditCardResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePartnerForm">
+      <documentation>Function used to return a protected partner form that was previously submitted</documentation>
+      <wsdl:input message="tns:RetrievePartnerFormRequest" />
+      <wsdl:output message="tns:RetrievePartnerFormResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TokenServicesBinding" type="tns:TokenServicesPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ProtectCreditCard">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/token.php/ProtectCreditCard" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePartnerForm">
+      <soap:operation soapAction="http://iwscommerce.intelius.com/commerce/2.1/token.php/RetrievePartnerForm" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" namespace="https://api.intelius.com/commerce/2.1/wsdl" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TokenServices">
+    <wsdl:port name="TokenServicesPort" binding="tns:TokenServicesBinding">
+      <soap:address location="http://iwscommerce.intelius.com/commerce/2.1/token.php" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

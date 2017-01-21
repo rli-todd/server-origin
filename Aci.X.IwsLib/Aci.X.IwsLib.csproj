@@ -1,0 +1,491 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B7C2870C-7DBD-440D-9446-20348D23AC3B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Aci.X.IwsLib</RootNamespace>
+    <AssemblyName>Aci.X.IwsLib</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Win2Go|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Win2Go\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Win2Go|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Win2Go\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Label="SlowCheetah">
+    <SlowCheetahToolsPath>$([System.IO.Path]::GetFullPath( $(MSBuildProjectDirectory)\..\packages\SlowCheetah.2.5.14\tools\))</SlowCheetahToolsPath>
+    <SlowCheetah_EnableImportFromNuGet Condition=" '$(SlowCheetah_EnableImportFromNuGet)'=='' ">true</SlowCheetah_EnableImportFromNuGet>
+    <SlowCheetah_NuGetImportPath Condition=" '$(SlowCheetah_NuGetImportPath)'=='' ">$([System.IO.Path]::GetFullPath( $(MSBuildProjectDirectory)\Properties\SlowCheetah\SlowCheetah.Transforms.targets ))</SlowCheetah_NuGetImportPath>
+    <SlowCheetahTargets Condition=" '$(SlowCheetah_EnableImportFromNuGet)'=='true' and Exists('$(SlowCheetah_NuGetImportPath)') ">$(SlowCheetah_NuGetImportPath)</SlowCheetahTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Stage|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Stage\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Stage|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Stage\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Web.XmlTransform">
+      <HintPath>..\packages\Microsoft.Web.Xdt.2.1.1\lib\net40\Microsoft.Web.XmlTransform.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=3.2.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\Solishine.Intelius.ConsoleTest\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IwsCatalogClient.cs" />
+    <Compile Include="DB\Cache\CacheBase.cs" />
+    <Compile Include="DB\Entity\DBCompressedResults.cs" />
+    <Compile Include="DB\Entity\DBID.cs" />
+    <Compile Include="DB\Entity\DBIwsCachedPreview.cs" />
+    <Compile Include="DB\Proc\spAliasGetID.cs" />
+    <Compile Include="DB\Proc\spCompanyGetID.cs" />
+    <Compile Include="DB\Proc\spFirstNameGetID.cs" />
+    <Compile Include="DB\Proc\spGeoLocationGetByCityStateZip.cs" />
+    <Compile Include="DB\Proc\spIwsCacheDeleteNull.cs" />
+    <Compile Include="DB\Proc\spLastNameGetID.cs" />
+    <Compile Include="DB\Proc\spMiddleNameGetID.cs" />
+    <Compile Include="DB\Proc\spPersonGetID.cs" />
+    <Compile Include="DB\Proc\spSchoolGetID.cs" />
+    <Compile Include="DB\Proc\spSearchResultsCacheConsume.cs" />
+    <Compile Include="DB\Proc\spSearchResultsGetUnconsumed.cs" />
+    <Compile Include="DB\Proc\spIwsCacheGetByID.cs" />
+    <Compile Include="DB\Server\ServerProfile.cs" />
+    <Compile Include="Exceptions\IwsException.cs" />
+    <Compile Include="CommerceClientBase.cs" />
+    <Compile Include="IwsCustomerClient.cs" />
+    <Compile Include="IwsFulfillmentClient.cs" />
+    <Compile Include="IwsSubscriptionClient.cs" />
+    <Compile Include="IwsTransactionClient.cs" />
+    <Compile Include="OrderHelper.cs" />
+    <Compile Include="ProfileClient.cs" />
+    <Compile Include="IwsConfig.cs" />
+    <Compile Include="IwsPreviewConsumerQueue.cs" />
+    <Compile Include="NLogger.cs" />
+    <Compile Include="ProfileHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\Commerce.v2_1.Catalog\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\Commerce.v2_1.Customer\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\Commerce.v2_1.Fulfillment\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\Commerce.v2_1.Subscription\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\Commerce.v2_1.Token\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\Commerce.v2_1.Transaction\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Storefront\ApplyItemPromotionResponse.cs" />
+    <Compile Include="Storefront\AuthenticateUserResponse.cs" />
+    <Compile Include="Storefront\CardsResponse.cs" />
+    <Compile Include="Storefront\DelayedBilling.cs" />
+    <Compile Include="Storefront\Duration.cs" />
+    <Compile Include="Storefront\GenericResponse.cs" />
+    <Compile Include="Storefront\GetPaymentInformationResponse.cs" />
+    <Compile Include="Storefront\ItemPromotion.cs" />
+    <Compile Include="Storefront\Nonce.cs" />
+    <Compile Include="Storefront\PaymentMethod.cs" />
+    <Compile Include="Storefront\PaymentProxyClient.cs" />
+    <Compile Include="Storefront\PriceAdjustment.cs" />
+    <Compile Include="Storefront\Product.cs" />
+    <Compile Include="Storefront\ProductBase.cs" />
+    <Compile Include="Storefront\ReportCredential.cs" />
+    <Compile Include="Storefront\ResetPasswordResponse.cs" />
+    <Compile Include="Storefront\StorefrontClient.cs" />
+    <Compile Include="Storefront\ResponseDetail.cs" />
+    <Compile Include="Storefront\Address.cs" />
+    <Compile Include="Storefront\Card.cs" />
+    <Compile Include="Storefront\CardStatus.cs" />
+    <Compile Include="Storefront\Name.cs" />
+    <Compile Include="Storefront\Phone.cs" />
+    <Compile Include="Storefront\Preference.cs" />
+    <Compile Include="Storefront\TransactionLineItem.cs" />
+    <Compile Include="Storefront\TransactionRequestDetails.cs" />
+    <Compile Include="Storefront\TransactRequest.cs" />
+    <Compile Include="Storefront\TransactTransactionSplit.cs" />
+    <Compile Include="Storefront\ValidateProductOffering.cs" />
+    <Compile Include="Storefront\ValidateRequest.cs" />
+    <Compile Include="Storefront\ValidateTransaction.cs" />
+    <Compile Include="Storefront\TransactionDetails.cs" />
+    <Compile Include="Storefront\TransactionResponse.cs" />
+    <Compile Include="Storefront\ValidateTransactionSplit.cs" />
+    <Compile Include="Storefront\TransactTransaction.cs" />
+    <Compile Include="Storefront\UpdatePasswordResponse.cs" />
+    <Compile Include="Storefront\User.cs" />
+    <Compile Include="Storefront\UserAuthentication.cs" />
+    <Compile Include="Storefront\UserResponse.cs" />
+    <Compile Include="Storefront\ValidateResponse.cs" />
+    <Compile Include="Storefront\Wallet.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="app2.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Catalog\Aci.X.IwsLib.Commerce.v2_1.Catalog.CompletionResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Catalog\Aci.X.IwsLib.Commerce.v2_1.Catalog.GetAddonsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Catalog\Aci.X.IwsLib.Commerce.v2_1.Catalog.GetProductResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Catalog\Aci.X.IwsLib.Commerce.v2_1.Catalog.Product.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Catalog\catalog.wsdl" />
+    <None Include="Service References\Commerce.v2_1.Customer\customer.wsdl" />
+    <None Include="Service References\Commerce.v2_1.Customer\Solishine.X.IwsLib.Commerce.v2_1.Customer.AuthenticateUserResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Customer\Solishine.X.IwsLib.Commerce.v2_1.Customer.CompletionResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Customer\Solishine.X.IwsLib.Commerce.v2_1.Customer.CreateUserResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Customer\Solishine.X.IwsLib.Commerce.v2_1.Customer.ResetPasswordResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Customer\Solishine.X.IwsLib.Commerce.v2_1.Customer.UpdateUserResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Customer\Solishine.X.IwsLib.Commerce.v2_1.Customer.User.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Fulfillment\fulfill.wsdl" />
+    <None Include="Service References\Commerce.v2_1.Fulfillment\Solishine.X.IwsLib.Commerce.v2_1.Fulfillment.BackgroundType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Fulfillment\Solishine.X.IwsLib.Commerce.v2_1.Fulfillment.CompletionResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Fulfillment\Solishine.X.IwsLib.Commerce.v2_1.Fulfillment.DebitOrderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Fulfillment\Solishine.X.IwsLib.Commerce.v2_1.Fulfillment.GetReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Fulfillment\Solishine.X.IwsLib.Commerce.v2_1.Fulfillment.ReportType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Subscription\Solishine.X.IwsLib.Commerce.v2_1.Subscription.CancelSubscriptionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Subscription\Solishine.X.IwsLib.Commerce.v2_1.Subscription.CompletionResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Subscription\Solishine.X.IwsLib.Commerce.v2_1.Subscription.GetSubscriptionDetailResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Subscription\Solishine.X.IwsLib.Commerce.v2_1.Subscription.GetUserSubscriptionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Subscription\Solishine.X.IwsLib.Commerce.v2_1.Subscription.ReActivateSubscriptionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Subscription\Solishine.X.IwsLib.Commerce.v2_1.Subscription.SubcriptionType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Subscription\subscription.wsdl" />
+    <None Include="Service References\Commerce.v2_1.Token\Solishine.X.IwsLib.Commerce.v2_1.Token.CompletionResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Token\Solishine.X.IwsLib.Commerce.v2_1.Token.ProtectCreditCardResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Token\Solishine.X.IwsLib.Commerce.v2_1.Token.ResponseDetailType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Token\Solishine.X.IwsLib.Commerce.v2_1.Token.RetrievePartnerFormResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Token\token.wsdl" />
+    <None Include="Service References\Commerce.v2_1.Transaction\Solishine.X.IwsLib.Commerce.v2_1.Transaction.AnonymousType_0001.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Transaction\Solishine.X.IwsLib.Commerce.v2_1.Transaction.CompletionResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Transaction\Solishine.X.IwsLib.Commerce.v2_1.Transaction.CreateOrderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Transaction\Solishine.X.IwsLib.Commerce.v2_1.Transaction.Credit.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Transaction\Solishine.X.IwsLib.Commerce.v2_1.Transaction.GetCreditsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Transaction\Solishine.X.IwsLib.Commerce.v2_1.Transaction.GetOrderDetailResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Transaction\Solishine.X.IwsLib.Commerce.v2_1.Transaction.GetPurchaseHistoryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Transaction\Solishine.X.IwsLib.Commerce.v2_1.Transaction.OrderItemType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Transaction\Solishine.X.IwsLib.Commerce.v2_1.Transaction.OrderType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Transaction\Solishine.X.IwsLib.Commerce.v2_1.Transaction.TransactionResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Transaction\Solishine.X.IwsLib.Commerce.v2_1.Transaction.ValidateOrderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Commerce.v2_1.Transaction\transaction.wsdl" />
+    <None Include="Transaction.wsdl">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\Commerce.v2_1.Catalog\" />
+    <WCFMetadataStorage Include="Service References\Commerce.v2_1.Customer\" />
+    <WCFMetadataStorage Include="Service References\Commerce.v2_1.Fulfillment\" />
+    <WCFMetadataStorage Include="Service References\Commerce.v2_1.Subscription\" />
+    <WCFMetadataStorage Include="Service References\Commerce.v2_1.Token\" />
+    <WCFMetadataStorage Include="Service References\Commerce.v2_1.Transaction\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Commerce.v2_1.Transaction\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Commerce.v2_1.Transaction\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Commerce.v2_1.Transaction\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Commerce.v2_1.Customer\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Commerce.v2_1.Customer\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Commerce.v2_1.Customer\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Client\trunk\Aci.X.ClientLib\Aci.X.ClientLib.csproj">
+      <Project>{9af7b454-8763-40c6-8da9-6f76b9151877}</Project>
+      <Name>Aci.X.ClientLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Client\trunk\Solishine.CommonLib\Solishine.CommonLib.csproj">
+      <Project>{5c6b5f62-db89-443e-aede-14b1e43dd566}</Project>
+      <Name>Solishine.CommonLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aci.X.DatabaseEntity\Aci.X.DatabaseEntity.csproj">
+      <Project>{ad1c19b3-846c-46f6-b0f4-2bb51403715d}</Project>
+      <Name>Aci.X.DatabaseEntity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aci.X.Database\Aci.X.Database.csproj">
+      <Project>{5d064f66-1cdb-4fca-9c0c-a7f5b18d7b6d}</Project>
+      <Name>Aci.X.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aci.X.ServerLib\Aci.X.ServerLib.csproj">
+      <Project>{0a32834c-023a-4e19-bdee-e80972f6165f}</Project>
+      <Name>Aci.X.ServerLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Commerce.v2_1.Token\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Commerce.v2_1.Token\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Commerce.v2_1.Token\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Commerce.v2_1.Catalog\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Commerce.v2_1.Catalog\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Commerce.v2_1.Catalog\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Commerce.v2_1.Subscription\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Commerce.v2_1.Subscription\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Commerce.v2_1.Subscription\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Commerce.v2_1.Fulfillment\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Commerce.v2_1.Fulfillment\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Commerce.v2_1.Fulfillment\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Profile\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="NewRelic_Aci.X.IwsLib.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <Import Project="$(SlowCheetahTargets)" Condition="Exists('$(SlowCheetahTargets)')" Label="SlowCheetah" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

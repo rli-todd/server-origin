@@ -1,0 +1,17 @@
+CREATE TABLE [dbo].[Sub-EST2012]
+(
+[SUMLEV] [varchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[STATE] [varchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[COUNTY] [varchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[PLACE] [varchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[COUSUB] [varchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[CONCIT] [varchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[NAME] [varchar] (500) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[STNAME] [varchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[CENSUS2010POP] [varchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[ESTIMATESBASE2010] [varchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[POPESTIMATE2010] [varchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[POPESTIMATE2011] [varchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[POPESTIMATE2012] [varchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
+) ON [PRIMARY]
+GO

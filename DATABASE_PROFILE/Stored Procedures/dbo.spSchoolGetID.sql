@@ -1,0 +1,18 @@
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+
+CREATE PROC [dbo].[spSchoolGetID]( @SchoolName VARCHAR(128)) AS
+	SET NOCOUNT ON
+	DECLARE 
+		@SchoolID INT
+		
+	SELECT @SchoolID=ID FROM School WHERE SchoolName=@SchoolName
+	IF @SchoolID IS NULL BEGIN
+		INSERT INTO School(SchoolName) VALUES (@SchoolName)
+		SET @SchoolID=SCOPE_IDENTITY()
+	END
+	RETURN @SchoolID
+
+GO

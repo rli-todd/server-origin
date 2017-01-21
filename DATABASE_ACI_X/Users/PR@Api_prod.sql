@@ -1,0 +1,4 @@
+CREATE USER [PR\Api_prod]
+	FOR LOGIN [PR\Api_prod]
+	WITH DEFAULT_SCHEMA = [dbo]
+GO

@@ -1,0 +1,10 @@
+CREATE TABLE [dbo].[MiddleName]
+(
+[ID] [int] NOT NULL IDENTITY(1, 1),
+[MiddleName] [varchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[MiddleName] ADD CONSTRAINT [PK_MiddleName] PRIMARY KEY CLUSTERED  ([ID]) WITH (FILLFACTOR=70) ON [PRIMARY]
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [IX_MiddleName] ON [dbo].[MiddleName] ([MiddleName]) INCLUDE ([ID]) ON [PRIMARY]
+GO
