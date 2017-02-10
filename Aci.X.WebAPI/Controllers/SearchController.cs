@@ -33,7 +33,7 @@ namespace Aci.X.WebAPI
       };
 
       ProfileResponse response = ProfileHelper.GetPreviews(query, 12);
-      SearchResultsPage retVal = new SearchResultsPage();
+      SearchResultsPage retVal = new SearchResultsPage() { QueryID = response.QueryID };
 
       if (response != null && response.Profiles != null && response.Profiles.Profile != null)
       {

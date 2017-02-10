@@ -37,13 +37,13 @@ namespace Aci.X.IwsLib
       }
     }
 
-    public string Checkout(DBSkuProductDictionary dict)
+    public string Checkout(DBProduct[] products)
     {
-      TRAN.PurchaseItemType[] purchaseItems = GetPurchaseItems(dict);
+      TRAN.PurchaseItemType[] purchaseItems = GetPurchaseItems(products);
       if (purchaseItems.Length == 0)
         throw new IwsException(System.Net.HttpStatusCode.BadRequest, "EmptyCart");
 
-      TRAN.ValidateOrderRequest validateRequest = ValidateRequest(dict);
+      TRAN.ValidateOrderRequest validateRequest = ValidateRequest(products);
       validateRequest.CVV = _context.DBUser.CardCVV;
       TRAN.ValidateOrderResponse validateResponse = _iwsClient.ValidateOrderAsync(validateRequest).Result;
       TRAN.CompletionResponseType completionResponse = validateResponse.CompletionResponse;
@@ -112,7 +112,7 @@ namespace Aci.X.IwsLib
       return XmlHelper.Serialize(resp.Order, System.Text.UnicodeEncoding.Unicode);
     }
 
-    private TRAN.ValidateOrderRequest ValidateRequest(DBSkuProductDictionary dict)
+    private TRAN.ValidateOrderRequest ValidateRequest(DBProduct[] products)
     {
       return new TRAN.ValidateOrderRequest
       {
@@ -122,7 +122,7 @@ namespace Aci.X.IwsLib
         ClientAuth = ClientAuth,
         CVV = _context.DBUser.CardCVV,
         PurchaseContext = MyPurchaseContext,
-        PurchaseItemList = GetPurchaseItems(dict)
+        PurchaseItemList = GetPurchaseItems(products)
       };
     }
 
@@ -150,7 +150,7 @@ namespace Aci.X.IwsLib
       }
     }
 
-    private TRAN.PurchaseItemType[] GetPurchaseItems(DBSkuProductDictionary dict)
+    private TRAN.PurchaseItemType[] GetPurchaseItems(DBProduct[] products)
     {
       List<TRAN.PurchaseItemType> listItems = new List<TRAN.PurchaseItemType>();
       Cart cart = _context.DBVisit.Cart;

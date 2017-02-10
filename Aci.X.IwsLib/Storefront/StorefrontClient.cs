@@ -256,8 +256,7 @@ namespace Aci.X.IwsLib.Storefront
         {
           listItems.Add(new ValidateProductOffering
           {
-            //productOfferingId = orderItem.ProductToken
-            productOfferingId = "1-FufqyMzUX35wotSwJkZyPJFmjwzDCoQWXAHSOtcqK3pAZKHFu45rP_wcC4YT7pkmIgTIH7KoeqJ-8gGVpeIa4MecrEwXbv56HPf2bwE5Jkzu4JFHA3ameaUFdZkosRAJfi-VlOUR2DxwC4BMI9_DEw"
+            productOfferingId = orderItem.OfferToken ?? orderItem.ProductToken
           });
         }
       }
@@ -303,9 +302,10 @@ namespace Aci.X.IwsLib.Storefront
         strMethod: "POST",
 
         strBody: "json_data=" + strBase64Json,
-        strQuery: 
+        strQuery:
           "?userid=" + _context.DBVisit.IwsUserID.ToString(),
         strResource: "3.0/transaction/validate");
+        //strResource: "transaction/validate");
       var response = JsonObjectSerializer.Deserialize<ValidateResponse>(strRetJson);
       if (response.responseCode != 1000)
       {
@@ -338,7 +338,32 @@ namespace Aci.X.IwsLib.Storefront
         strQuery:
           "?userid=" + _context.DBVisit.IwsUserID.ToString(),
         strResource: "3.0/transaction/transact");
+        //strResource: "transaction/transact");
       var response = JsonObjectSerializer.Deserialize<TransactionResponse>(strRetJson);
+      if (response.responseCode != 1000)
+      {
+        throw new IwsException(HttpStatusCode.BadRequest, response.responseDetail.message);
+      }
+      return response;
+    }
+
+    public TransactionGetResponse GetTransactions( int[] intTransactionIDs=null)
+    {
+      var strQuery = "?userid=" + _context.DBVisit.IwsUserID.ToString();
+      if (intTransactionIDs != null && intTransactionIDs.Length>0)
+      {
+        //var list = new List<int>(intTransactionIDs);
+        //var strJson = JsonObjectSerializer.Serialize(list);
+        //var strBase64Json = Convert.ToBase64String(UTF8Encoding.UTF8.GetBytes(strJson));
+        strQuery = strQuery + "&transactionIds=" + string.Join(",",intTransactionIDs);
+      }
+      var strRetJson = ExecuteApiRequest(
+        strMethod: "GET",
+        strBody: null,
+        strQuery: strQuery,
+        strResource: "3.0/transaction/get");
+
+      var response = JsonObjectSerializer.Deserialize<TransactionGetResponse>(strRetJson);
       if (response.responseCode != 1000)
       {
         throw new IwsException(HttpStatusCode.BadRequest, response.responseDetail.message);
@@ -368,8 +393,11 @@ namespace Aci.X.IwsLib.Storefront
         strResource: "promotions/applyitem"
         );
       var response = JsonObjectSerializer.Deserialize<ApplyItemPromotionResponse>(strJson);
-      return strJson;
-
+      return response != null && 
+        response.details != null &&
+        response.details.status == "VALID"
+        ? response.details.productOfferingId
+        : null;
     }
 
 

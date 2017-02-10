@@ -11,6 +11,7 @@ namespace Aci.X.DatabaseEntity
     public int UserID;
     public int VisitID;
     public DateTime OrderDate;
+    public decimal Discount;
     public decimal Subtotal;
     public decimal Tax;
     public decimal OrderTotal;
@@ -24,7 +25,8 @@ namespace Aci.X.DatabaseEntity
       UserID= Value<int>("UserID");
       VisitID = Value<int>("VisitID");
       OrderDate = Value<DateTime>("OrderDate");
-      Subtotal = Value<decimal>("Subtotal");
+      Subtotal = Value<decimal>("SubTotal");
+      Discount = Value<decimal>("Discount");
       Tax = Value<decimal>("Tax");
       OrderTotal = Value<decimal>("OrderTotal");
     }
@@ -40,10 +42,15 @@ namespace Aci.X.DatabaseEntity
     public int ProductID;
     public int ProductExternalID;
     public string ProductToken;
+    public string OfferToken;
     public string ProductName;
+    public string ProductCode;
+    public string SkuCode;
+    public string ProductType;
     public int Quantity;
     public decimal RegularPrice;
     public decimal Price;
+    public decimal Tax;
     public decimal DiscountAmount;
     public string DiscountDescription;
     public decimal RecurringPrice;
@@ -66,12 +73,17 @@ namespace Aci.X.DatabaseEntity
       ProductID= Value<int>("ProductID");
       ProductExternalID = Value<int>("ProductExternalID");
       ProductToken = Value<string>("ProductToken");
-      ProductName = Value<string>("CategoryName");
+      ProductCode = Value<string>("ProductCode");
+      SkuCode = Value<string>("SkuCode");
+      OfferToken = Value<string>("OfferToken");
+      ProductName = Value<string>("ProductName");
+      ProductType = Value<string>("ProductType");
       Quantity = Value<short>("Quantity");
       RegularPrice = Value<decimal>("RegularPrice");
       Price = Value<decimal>("Price");
       DiscountAmount = Value<decimal>("DiscountAmount");
       DiscountDescription = Value<string>("DiscountDesciption");
+      Tax = Value<decimal>("Tax");
       RecurringPrice = Value<decimal>("RecurringPrice");
       ReportTypeCode = Value<string>("ReportTypeCode");
       QueryID = Value<int?>("QueryID");

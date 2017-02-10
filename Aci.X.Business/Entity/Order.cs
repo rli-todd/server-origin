@@ -24,6 +24,7 @@ namespace Aci.X.Business
         OrderExternalID = dbOrder.OrderExternalID,
         OrderDate = dbOrder.OrderDate,
         Subtotal = dbOrder.Subtotal,
+        Discount = dbOrder.Discount,
         Tax = dbOrder.Tax,
         OrderTotal = dbOrder.OrderTotal,
         VisitID = dbOrder.VisitID,
@@ -36,6 +37,8 @@ namespace Aci.X.Business
                    OrderID = i.OrderID,
                    ProductID = i.ProductID,
                    ProductExternalID = i.ProductExternalID,
+                   ProductToken = i.ProductToken,
+                   OfferToken = i.OfferToken,
                    SkuID = i.SkuID,
                    ProductName = i.ProductName +
                     (i.FirstName == null 
@@ -44,10 +47,15 @@ namespace Aci.X.Business
                                     (String.IsNullOrEmpty(i.MiddleInitial.Trim()) ? "" : " " + i.MiddleInitial) +
                                     " " + i.LastName +
                                     (String.IsNullOrWhiteSpace(i.State) ? "" : " in " + GeneralPurposeCache.Singleton.StateByAbbr(i.State).StateName)),
+                   
+                   ProductType=i.ProductType,
+                   ProductCode=i.ProductCode,
+                   SkuCode=i.SkuCode,
                    Quantity = i.Quantity,
                    RegularPrice = i.RegularPrice,
                    Price = i.Price,
                    DiscountAmount = i.DiscountAmount,
+                   Tax = i.Tax,
                    DiscountDescription = i.DiscountDescription,
                    RecurringPrice = i.RecurringPrice,
                    FirstName = i.FirstName,
@@ -67,15 +75,6 @@ namespace Aci.X.Business
       {
         throw new CartEmptyException();
       }
-      /*
-       * Note that while the IWS API supports orders containing multiple
-       * different product IDs, there is no way for us to attach our own 
-       * identifiers to individual Order Items, so this effectively prevents 
-       * us from ever purchasing more than one item at a time.
-       * 
-       * We are half-way modeled around a structure that could support multiple
-       * purchased items, so to work within this IWS constraint is a bit of a hack.
-       */
       string strProfileID = null;
       int intQueryID = context.DBVisit.CurrentQueryID;
       foreach (var item in context.DBVisit.Cart.Items)
@@ -90,62 +89,114 @@ namespace Aci.X.Business
         }
       }
 
-      IwsTransactionClient tranCli = new IwsTransactionClient(context);
       var storefrontCli = new SF.StorefrontClient(context);
-      var catalog = CatalogCache.Singleton.Get(context.SiteID);
-      try
+      using (var db = new AciXDB())
       {
-        var sfRet = storefrontCli.Checkout();
-        string strOrderXml = Solishine.CommonLib.XmlHelper.Serialize(sfRet);
+        var catalog = db.spProductGet(
+          intSiteID: context.SiteID,
+          intUserID: context.AuthorizedUserID,
+          intProductIDs: null);
 
-        strOrderXml = tranCli.Checkout(catalog.DictSkuProducts);
-        var intOrderID = CreateFromIwsOrder(context, strOrderXml, intQueryID: intQueryID, strProfileID: strProfileID);
         /*
-          * Hacky: We can't get all the order item details from the IWS XML,
-          * so we'll set the OrderItem level attributes one at a time.
-          */
-        foreach (var sku in context.DBVisit.Cart.Items)
+         * If the order has only "free" items, i.e. due to a valid subscription,
+         * then we won't create an IWS order.  We'll use the order for the valid 
+         * subscription period.
+         */
+        int intOrderID = 0;
+        ClientLib.Order order = null;
+        bool boolFreeOrder = true;
+        int intSubscriptionOrderID = 0;
+        int intSubscriptionItemSkuID = 0;
+
+        foreach (var item in context.DBVisit.Cart.Items)
         {
-          //db.spOrderUpdateItem(
-          //  intOrderID: intOrderID,
-          //  intProductSkuID: sku.)
+          if (item.SubscriptionOrderID != 0)
+          {
+            intSubscriptionOrderID = item.SubscriptionOrderID;
+            intSubscriptionItemSkuID = item.SkuID;
+          }
+
+          if (item.SubscriptionOrderID == 0 || item.SubscriptionQuantityRemaining <= 0)
+          {
+            boolFreeOrder = false;
+          }
         }
-        var order = Get(context, new int[] { intOrderID })[0];
-        MandrillClient.NewMessage(context, "PurchaseReceipt", strVarName: "order", oVarValue: order).Send();
+        if (boolFreeOrder)
+        {
+          db.spUserSubscriptionItemDebit(
+            intSiteID: context.SiteID,
+            intUserID: context.AuthorizedUserID,
+            intItemSkuID: intSubscriptionItemSkuID);
+
+          order = Get(context, new int[] { intSubscriptionOrderID }).First();
+        }
+        else
+        {
+          try
+          {
+            var sfRet = storefrontCli.Checkout();
+            string strOrderXml = Solishine.CommonLib.XmlHelper.Serialize(sfRet, System.Text.UnicodeEncoding.Unicode);
+            intOrderID = CreateFromIwsOrder(
+              context: context,
+              strOrderXml: strOrderXml,
+              intQueryID: intQueryID,
+              strProfileID: strProfileID,
+              boolIsStorefrontXml: true,
+              boolIsMultipleOrders: false);
+
+            order = Get(context, new int[] { intOrderID })[0];
+            MandrillClient.NewMessage(context, "PurchaseReceipt", strVarName: "order", oVarValue: order).Send();
+
+            /*
+             * If the user just purchased a subscription, we need to get that in synch now..
+             */
+            var subscriptionItem = (from i in order.Items where i.ProductType == "Subscription" select i).FirstOrDefault();
+            if (subscriptionItem != null)
+            {
+              User.GetSubscriptions(context);
+            }
+          }
+          catch (IwsException iex)
+          {
+            var reason = iex.Reason.ToLower();
+            if (reason != "decline_alreadyinservice" && reason.Contains("decline"))
+            {
+              /*
+               * Clear the users's "has valid payment method" status
+               */
+              db.spUserUpdate(
+                intVisitID: context.VisitID,
+                intUserID: context.AuthorizedUserID,
+                intSiteID: context.SiteID,
+                boolHasValidPaymentMethod: false);
+
+              throw new CreditCardDeclinedException();
+            }
+            throw;
+          }
+        }
         return order;
       }
-      catch (IwsException iex)
-      {
-        var reason = iex.Reason.ToLower();
-        if (reason != "decline_alreadyinservice" && reason.Contains("decline"))
-        {
-          /*
-           * Clear the users's "has valid payment method" status
-           */
-          using (var db = new AciXDB())
-          {
-            db.spUserUpdate(
-              intVisitID: context.VisitID,
-              intUserID: context.AuthorizedUserID,
-              intSiteID: context.SiteID,
-              boolHasValidPaymentMethod: false);
-          }
-          throw new CreditCardDeclinedException();
-        }
-        throw;
-      }
-
     }
 
-    public static int CreateFromIwsOrder(CallContext context, string strOrderXml, int? intQueryID = null, string strProfileID = null)
+    public static int CreateFromIwsOrder(
+      CallContext context, 
+      string strOrderXml, 
+      int? intQueryID = null, 
+      string strProfileID = null,
+      bool boolIsStorefrontXml=true,
+      bool boolIsMultipleOrders=false)
     {
       using (var db = new AciXDB())
       {
         var intOrderID = db.spOrderCreate(
           intSiteID: context.SiteID,
+          intUserID: context.AuthorizedUserID,
           strOrderXml: strOrderXml,
           intQueryID: intQueryID,
-          strProfileID: strProfileID);
+          strProfileID: strProfileID,
+          boolIsStorefrontXml: boolIsStorefrontXml,
+          boolIsMultipleOrders: boolIsMultipleOrders);
 
         return intOrderID;
       }

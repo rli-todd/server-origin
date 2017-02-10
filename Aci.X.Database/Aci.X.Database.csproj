@@ -135,6 +135,7 @@
     <Compile Include="Proc\spCacheGet.cs" />
     <Compile Include="Proc\spCacheSet.cs" />
     <Compile Include="Proc\spCartUpdate.cs" />
+    <Compile Include="Proc\spCategorySearch.cs" />
     <Compile Include="Proc\spEduInstititionAssociate.cs" />
     <Compile Include="Proc\spEduInstitutionGet.cs" />
     <Compile Include="Proc\spEduInstitutionSearch.cs" />
@@ -154,7 +155,7 @@
     <Compile Include="Proc\spPageGetContent.cs" />
     <Compile Include="Proc\spPageUpdate.cs" />
     <Compile Include="Proc\spPostalLookup.cs" />
-    <Compile Include="Proc\spCatalogGet.cs" />
+    <Compile Include="Proc\spProductGet.cs" />
     <Compile Include="Proc\spProductInitAll.cs" />
     <Compile Include="Proc\spProductRefresh.cs" />
     <Compile Include="Proc\spProfileDelete.cs" />
@@ -178,10 +179,13 @@
     <Compile Include="Proc\spSectionGet.cs" />
     <Compile Include="Proc\spSectionUpdate.cs" />
     <Compile Include="Proc\spSkuGet.cs" />
-    <Compile Include="Proc\spSkuSearch.cs" />
+    <Compile Include="Proc\spSkuSetOfferToken.cs" />
     <Compile Include="Proc\spUserCreate.cs" />
     <Compile Include="Proc\spUserGet.cs" />
     <Compile Include="Proc\spUserSearch.cs" />
+    <Compile Include="Proc\spUserSubscriptionItemDebit.cs" />
+    <Compile Include="Proc\spUserSubscriptionItemGet.cs" />
+    <Compile Include="Proc\spUserSubscriptionUpdate.cs" />
     <Compile Include="Proc\spUserUpdate.cs" />
     <Compile Include="Proc\spVariationCreate.cs" />
     <Compile Include="Proc\spVariationDelete.cs" />

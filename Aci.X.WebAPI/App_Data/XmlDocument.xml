@@ -718,7 +718,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Aci.X.WebAPI.ReportController._GET_report_new(System.Int32,System.String,System.Int32,System.String)">
+        <member name="M:Aci.X.WebAPI.ReportController._GET_report_new(System.Int32,System.String,System.Nullable{System.Int32},System.String)">
             <summary>
             Creates and returns a new report based on the user's most recent
             query (/search/preview), and optionally for a specific profile in 

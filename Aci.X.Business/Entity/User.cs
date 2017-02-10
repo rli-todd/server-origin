@@ -360,12 +360,19 @@ namespace Aci.X.Business
           var strOrderXml = client.GetOrder(c.TxnID);
           if (strOrderXml != null)
           {
-            int intOrderID = Order.CreateFromIwsOrder(context, strOrderXml);
+            int intOrderID = Order.CreateFromIwsOrder(
+              context: context, 
+              strOrderXml: strOrderXml,
+              boolIsStorefrontXml: false,
+              boolIsMultipleOrders: false);
             order = orderCache.Get(c.TxnID);
           }
         }
       }
-      return Credit.Render(context.SiteID, credits);
+      return Credit.Render(
+        tSiteID: context.SiteID, 
+        intUserID: context.AuthorizedUserID,
+        credits: credits);
     }
 
     public static string GetPaymentJavaScript(CallContext context, string strPaymentDiv)
@@ -472,25 +479,73 @@ namespace Aci.X.Business
     public static object GetSubscriptions(CallContext context)
     {
       IwsSubscriptionClient subCli = new IwsSubscriptionClient(context);
-      return subCli.GetSubscriptions();
+      var subs = subCli.GetSubscriptions();
+      using (var db = new AciXDB())
+      {
+        var xml = XmlHelper.Serialize(subs, System.Text.UnicodeEncoding.Unicode);
+        int[] intUnknownExternalOrderIDs = db.spUserSubscriptionUpdate(
+          intSiteID: context.SiteID,
+          intUserID: context.AuthorizedUserID,
+          strSubscriptionXml: xml);
+
+        /*
+         * If there are subscription orders that we don't know about,
+         * we need to go get them, and then get them into our system.
+         */
+        if (intUnknownExternalOrderIDs != null && intUnknownExternalOrderIDs.Length>0)
+        {
+          var sfCli = new StorefrontClient(context);
+          var orders = sfCli.GetTransactions(intUnknownExternalOrderIDs);
+          var ordersXml = XmlHelper.Serialize(orders.transactions, System.Text.UnicodeEncoding.Unicode);
+          int intOrderID = Order.CreateFromIwsOrder(
+            context: context,
+            strOrderXml: ordersXml,
+            boolIsStorefrontXml: true,
+            boolIsMultipleOrders: true);
+
+          /*
+           * And now update the subscriptions again.
+           * If there are unknown orders this time, then we have a problem.
+           */
+          intUnknownExternalOrderIDs = db.spUserSubscriptionUpdate(
+            intSiteID: context.SiteID,
+            intUserID: context.AuthorizedUserID,
+            strSubscriptionXml: xml);
+          
+          if (intUnknownExternalOrderIDs != null && intUnknownExternalOrderIDs.Length>0)
+          {
+            throw new IwsException(System.Net.HttpStatusCode.PreconditionFailed, "Unknown IWS orders");
+          }
+        }
+      }
+      return subs;
     }
 
     public static object GetSubscription(CallContext context, int intSubscriptionID)
     {
       IwsSubscriptionClient subCli = new IwsSubscriptionClient(context);
+      /*
+       * resynch all subscription related data
+       */
       return subCli.GetSubscription(intSubscriptionID);
     }
 
     public static object CancelAllSubscriptions(CallContext context)
     {
       IwsSubscriptionClient subCli = new IwsSubscriptionClient(context);
-      return subCli.CancelAllSubscriptions();
+      subCli.CancelAllSubscriptions();
+      return GetSubscriptions(context);
     }
 
     public static object CancelSubscription(CallContext context, int intSubscriptionID)
     {
       IwsSubscriptionClient subCli = new IwsSubscriptionClient(context);
-      return subCli.CancelSubscription(intSubscriptionID);
+      var retVal = subCli.CancelSubscription(intSubscriptionID);
+      /*
+       * resynch all subscription related data
+       */
+      GetSubscriptions(context);
+      return retVal;
     }
   }
 }

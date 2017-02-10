@@ -11,6 +11,7 @@ namespace Aci.X.IwsLib.Storefront
         //public ItemPromotionStatus status;
         public string productOfferingId;
         public PromotionDetails promotionDetails;
+        public string status;
     }
 
     //public class ItemPromotionStatus

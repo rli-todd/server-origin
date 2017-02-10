@@ -30,8 +30,8 @@ namespace Aci.X.Business
       string strState,
       string strPromoCode)
     {
-      var catalog = CatalogCache.Singleton.Get(context.SiteID);
-      var products = catalog.DictSkuProducts[intSkuID].ToArray();
+      //var catalog = CatalogCache.Singleton.Get(context.SiteID);
+      //var products = catalog.DictSkuProducts[intSkuID].ToArray();
       var dbVisit = context.DBVisit;
 
       // Deprecating the reliance on the saved QueryID
@@ -49,47 +49,50 @@ namespace Aci.X.Business
           Visit.SetStateAndQueryID(context, strState, response.QueryID);
         }
       }
-
-      for (int idxProduct = 0; idxProduct < products.Length; ++idxProduct)
+      using (var db = new AciXDB())
       {
-          var product = products[idxProduct];
-          if (product.RequireQueryID && context.DBVisit.CurrentQueryID == 0)
-          {
-              throw new QueryRequiredException();
-          }
-          if (product.RequireState && String.IsNullOrEmpty(context.DBVisit.CurrentQueryState) && String.IsNullOrEmpty(strState))
-          {
-              throw new StateRequiredException();
-          }
-          if (product.RequireProfileID && String.IsNullOrEmpty(strProfileID))
-          {
-              throw new ProfileRequiredException();
-          }
-          /*
-           * THIS WILL NEED TO BE OPTIMIZED
-           */
-          if (strPromoCode != null && product.ProductToken != null)
-          {
-              var sfCli = new Aci.X.IwsLib.Storefront.StorefrontClient(context);
-              var ret = sfCli.ApplyPromoItem(product.ProductToken.Replace("\n",""), strPromoCode);
-          }
-
-      }
-      var cart = Get(context);
-      cart.Items = (from p 
-                          in catalog.DictSkuProducts[intSkuID] 
-                        select Product.GetOrderItem(context, p, strProfileID: strProfileID, strState: strState, intQueryID: context.DBVisit.CurrentQueryID))
-                        .ToArray();
-      Update(context, cart);
-      using (var db=new AciXDB())
-      {
-        db.spCartUpdate(
+        var catalog = db.spProductGet(
           intSiteID: context.SiteID,
-          intVisitID: context.VisitID,
-          intProductID: cart.Items[0].ProductID,
-          intQueryID: cart.Items[0].QueryID,
-          strProfileID: cart.Items[0].ProfileID,
-          strStateAbbr: cart.Items[0].State);
+          intUserID: context.AuthorizedUserID);
+
+        var dbSku = (from p in catalog where p.Skus[0].SkuID == intSkuID select p.Skus[0]).First();
+
+        if (dbSku.RequireQueryID && context.DBVisit.CurrentQueryID == 0)
+        {
+            throw new QueryRequiredException();
+        }
+        if (dbSku.RequireState && String.IsNullOrEmpty(context.DBVisit.CurrentQueryState) && String.IsNullOrEmpty(strState))
+        {
+            throw new StateRequiredException();
+        }
+        if (dbSku.RequireProfileID && String.IsNullOrEmpty(strProfileID))
+        {
+            throw new ProfileRequiredException();
+        }
+        /*
+          * THIS WILL NEED TO BE OPTIMIZED
+          */
+        if (strPromoCode != null && dbSku.ProductToken != null)
+        {
+            var sfCli = new Aci.X.IwsLib.Storefront.StorefrontClient(context);
+            var ret = sfCli.ApplyPromoItem(dbSku.ProductToken.Replace("\n",""), strPromoCode);
+        }
+
+        var cart = Get(context);
+        /*
+         * Only one item in cart at a time right now.  Ugh.
+         */
+        cart.Items = new ClientLib.OrderItem[] { 
+          Sku.GetOrderItem(context, dbSku, strProfileID: strProfileID, strState: strState, intQueryID: context.DBVisit.CurrentQueryID)
+        };
+        Update(context, cart);
+          db.spCartUpdate(
+            intSiteID: context.SiteID,
+            intVisitID: context.VisitID,
+            intProductID: cart.Items[0].ProductID,
+            intQueryID: cart.Items[0].QueryID,
+            strProfileID: cart.Items[0].ProfileID,
+            strStateAbbr: cart.Items[0].State);
       }
       return Get(context);
     }

@@ -70,15 +70,12 @@
   <ItemGroup>
     <Compile Include="ApiLogger.cs" />
     <Compile Include="Cache\GeneralPurposeCache.cs" />
-    <Compile Include="Cache\OrderCache.cs" />
+    <Compile Include="Cache\SiteOrderCache.cs" />
     <Compile Include="Cache\QueryCache.cs" />
-    <Compile Include="Cache\CatalogCache.cs" />
     <Compile Include="Cache\ReportCache.cs" />
     <Compile Include="Cache\ReportTypeCache.cs" />
     <Compile Include="Cache\SiteCache.cs" />
     <Compile Include="Cache\SiteEntityCacheBase.cs" />
-    <Compile Include="Cache\SiteSkuCache.cs" />
-    <Compile Include="Cache\SiteSkuCacheByExternalID.cs" />
     <Compile Include="Cache\SiteUserCache.cs" />
     <Compile Include="Cache\SiteOrderCacheByExternalID.cs" />
     <Compile Include="Cache\SiteUserCacheByEmailAddress.cs" />
@@ -87,18 +84,17 @@
     <Compile Include="Entity\AccessToken.cs" />
     <Compile Include="Entity\Block.cs" />
     <Compile Include="Entity\Cart.cs" />
-    <Compile Include="Entity\Category.cs" />
+    <Compile Include="Entity\Product.cs" />
     <Compile Include="Entity\ContentBlock.cs" />
     <Compile Include="Entity\Credit.cs" />
     <Compile Include="Entity\CreditCard.cs" />
     <Compile Include="Entity\Order.cs" />
     <Compile Include="Entity\Page.cs" />
-    <Compile Include="Entity\Product.cs" />
+    <Compile Include="Entity\Sku.cs" />
     <Compile Include="Entity\Report.cs" />
     <Compile Include="Entity\ReportType.cs" />
     <Compile Include="Entity\Section.cs" />
     <Compile Include="Entity\Site.cs" />
-    <Compile Include="Entity\Sku.cs" />
     <Compile Include="Entity\Variation.cs" />
     <Compile Include="Entity\User.cs" />
     <Compile Include="Entity\Visit.cs" />

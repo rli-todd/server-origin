@@ -1,38 +1,34 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using Solishine.CommonLib;
-using System.Runtime.Serialization;
 
 namespace Aci.X.DatabaseEntity
 {
-  [DataContract(Namespace = "")]
   public class DBProduct : MySqlResult
   {
-    [DataMember(EmitDefaultValue = false)] public int ProductID;
-    [DataMember(EmitDefaultValue = false)] public int SkuID;
-    [DataMember(EmitDefaultValue = false)] public int ProductExternalID;
-    [DataMember(EmitDefaultValue = false)] public string ProductToken;
-    [DataMember(EmitDefaultValue = false)] public Decimal Price;
-    [DataMember(EmitDefaultValue = false)] public Decimal DiscountAmount;
-    [DataMember(EmitDefaultValue = false)] public Decimal RecurringPrice;
-    [DataMember(EmitDefaultValue = false)] public string ProductName;
-    [DataMember(EmitDefaultValue = false)] public bool RequireQueryID;
-    [DataMember(EmitDefaultValue = false)] public bool RequireState;
-    [DataMember(EmitDefaultValue = false)] public bool RequireProfileID; 
-    [DataMember(EmitDefaultValue = false)] public string ReportTypeCode;
-    
+    public int ProductID;
+    public string ProductName;
+    public bool IsActive;
+    public string ProductCode;
+    public bool RequireQueryID;
+    public bool RequireState;
+    public bool RequireProfileID;
+    public string ProductType; 
+    public int ProductExternalID;
+    public string ReportTypeCode;
+
+    public DBSku[] Skus; // Added by spProductGet
+
     public override void Read()
     {
       ProductID = Value<int>("ID");
-      SkuID = Value<int>("SkuID");
-      ProductExternalID = Value<int>("ProductExternalID");
-      ProductToken = Value<string>("ProductToken");
-      Price = Value<Decimal>("Price");
-      DiscountAmount = Value<Decimal>("DiscountAmount");
-      RecurringPrice = Value<Decimal>("RecurringPrice");
       ProductName = Value<string>("ProductName");
+      IsActive = Value<bool>("IsActive");
+      ProductCode = Value<string>("ProductCode");
       RequireQueryID = Value<bool>("RequireQueryID");
       RequireState = Value<bool>("RequireState");
       RequireProfileID = Value<bool>("RequireProfileID");
+      ProductType = Value<string>("ProductType");
+      ProductExternalID = Value<int>("ProductExternalID");
       ReportTypeCode = Value<string>("ReportTypeCode");
     }
   }

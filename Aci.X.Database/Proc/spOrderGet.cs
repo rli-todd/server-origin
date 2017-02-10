@@ -30,6 +30,7 @@ namespace Aci.X.Database
       {
         var dbOrders = reader.GetResults<DBOrder>();
         var dbOrderItems = reader.GetResults<DBOrderItem>();
+
         foreach (var dbOrder in dbOrders)
         {
           dbOrder.Items = (from i in dbOrderItems where i.OrderID == dbOrder.OrderID select i).ToArray();

@@ -27,13 +27,15 @@ namespace Aci.X.Business.Cache
     {
       using (var db = new AciXDB())
       {
-        return db.spSkuGet(_tSiteID, keys);
+        return db.spSkuGet(
+          intSiteID:_tSiteID,
+          intSkuIDs: keys);
       }
     }
 
     protected override int GetKey(DBSku t)
     {
-      return t.SkuID;
+      return t.ProductID;
     }
   }
 }

@@ -3,7 +3,7 @@
   public class DBCatalog
   {
     public int SiteID;
-    public DBCategory[] Categories;
-    public DBSkuProductDictionary DictSkuProducts;
+    public DBProduct[] Categories;
+    public DBProductSkuDictionary DictCategoryProducts;
   }
 }

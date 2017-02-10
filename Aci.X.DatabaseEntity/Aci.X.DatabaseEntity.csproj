@@ -87,11 +87,10 @@
     <Compile Include="DBOrder.cs" />
     <Compile Include="DBPage.cs" />
     <Compile Include="DBPostal.cs" />
-    <Compile Include="DBCategory.cs" />
     <Compile Include="DBProduct.cs" />
+    <Compile Include="DBSku.cs" />
     <Compile Include="DBQuery.cs" />
     <Compile Include="DBSite.cs" />
-    <Compile Include="DBSku.cs" />
     <Compile Include="DBReport.cs" />
     <Compile Include="DBReportType.cs" />
     <Compile Include="DBSearchResults.cs" />
@@ -100,8 +99,9 @@
     <Compile Include="DBSection.cs" />
     <Compile Include="DBSectionTemplate.cs" />
     <Compile Include="DBSectionValues.cs" />
-    <Compile Include="DBSkuProductDictionary.cs" />
+    <Compile Include="DBProductSkuDictionary.cs" />
     <Compile Include="DBUser.cs" />
+    <Compile Include="DBUserSubscriptionItem.cs" />
     <Compile Include="DBVariation.cs" />
     <Compile Include="DBVisit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

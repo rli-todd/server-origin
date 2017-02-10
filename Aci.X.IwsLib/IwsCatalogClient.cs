@@ -49,14 +49,14 @@ namespace Aci.X.IwsLib
 
       /******* ******** TEMP TEMP TEMP
        *
-       */
+       *
       listRequestedProducts.Clear();
       listRequestedProducts.Add(
         new Catalog.ProductItemType
         {
           ProductToken = "1-FufqyMzUX35wotSwJkZyPJFmjwzDCoQWXAHSOtcqK3pAZKHFu45rP_wcC4YT7pkmIgTIH7KoeqJ-8gGVpeIa4MecrEwXbv56HPf2bwE5Jkzu4JFHA3ameaUFdZkosRAJfi-VlOUR2DxwC4BMI9_DEw"
         });
-      
+      */
       var requestedProducts = listRequestedProducts.ToArray();
 
       Catalog.GetProductRequest catalogRequest = new Catalog.GetProductRequest
@@ -89,6 +89,10 @@ namespace Aci.X.IwsLib
             }
             else if (product.ProductType == "Subscription")
             {
+              /*
+               * Subscription products seem to appear twice.  We're supposed to use the
+               * one with the highest serviceGroupID.  Kludge!
+               */
               int intServiceGroupID = product.SubscriptionDetails.ServiceGroupID;
               if (dictProducts.ContainsKey(productReferenceID) == false ||
                 dictProducts[productReferenceID].SubscriptionDetails.ServiceGroupID > intServiceGroupID)

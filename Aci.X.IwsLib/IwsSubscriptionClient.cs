@@ -23,8 +23,17 @@ namespace Aci.X.IwsLib
         "SubscriptionServicesPort",
         IwsConfig.SubscriptionApiBaseUrl);
     }
+
     public SUB.SubcriptionType GetSubscription(int intSubscriptionID)
     {
+      /*
+       * If the user is not logged in, there are no subscriptions..
+       */
+      if (_context.DBUser == null || _context.DBUser.UserID == 0)
+      {
+        return null;
+      }
+
       var response = _iwsClient.GetSubscriptionDetailAsync(
         new SUB.GetSubscriptionDetailRequest()
         {
@@ -39,6 +48,14 @@ namespace Aci.X.IwsLib
 
     public SUB.SubcriptionType CancelSubscription(int intSubscriptionID)
     {
+      /*
+       * If the user is not logged in, there are no subscriptions..
+       */
+      if (_context.DBUser == null || _context.DBUser.UserID == 0)
+      {
+        return null;
+      }
+
       var response = _iwsClient.CancelSubscriptionAsync(
         new SUB.CancelSubscriptionRequest()
         {
@@ -54,16 +71,36 @@ namespace Aci.X.IwsLib
 
     public SUB.SubcriptionType[] CancelAllSubscriptions()
     {
+      /*
+       * If the user is not logged in, there are no subscriptions..
+       */
+      if (_context.DBUser == null || _context.DBUser.UserID == 0)
+      {
+        return new SUB.SubcriptionType[0];
+      }
+
       var subscriptions = GetSubscriptions();
       for (int idx = 0; idx < subscriptions.Length; ++idx)
       {
-        subscriptions[idx] = CancelSubscription(subscriptions[idx].SubscriptionID);
+        var sub = subscriptions[idx];
+        if (sub.Status == "Active")
+        {
+          subscriptions[idx] = CancelSubscription(sub.SubscriptionID);
+        }
       }
       return subscriptions;
     }
 
     public SUB.SubcriptionType[] GetSubscriptions()
     {
+      /*
+       * If the user is not logged in, there are no subscriptions..
+       */
+      if (_context.DBUser == null || _context.DBUser.UserID == 0)
+      {
+        return new SUB.SubcriptionType[0];
+      }
+
       var response = _iwsClient.GetUserSubscriptionsAsync(
         new SUB.GetUserSubscriptionsRequest()
         {
@@ -87,7 +124,7 @@ namespace Aci.X.IwsLib
       {
         return new SUB.UserContextType
         {
-          EmailAddress = _context.DBUser.EmailAddress,
+          EmailAddress = _context.DBUser==null||_context.DBUser.UserID==0?null:_context.DBUser.EmailAddress,
           UserToken = _context.DBVisit.IwsUserToken
         };
       }

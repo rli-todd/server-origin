@@ -39,15 +39,15 @@ namespace Aci.X.WebAPI
     [ReturnValue(typeof(WebServiceResponse))]
     public HttpResponseMessage _GET_catalog_refresh()
     {
-      Business.Product.RefreshCatalog(CallContext);
+      Business.Sku.RefreshCatalog(CallContext);
       return HttpStatusOK();
     }
 
-    [GET("categories"), HttpGet]
-    [ReturnValue(typeof(WebServiceResponse<Cli.Category[]>))]
-    public HttpResponseMessage _GET_catalog_categories()
+    [GET("products"), HttpGet]
+    [ReturnValue(typeof(WebServiceResponse<Cli.Product[]>))]
+    public HttpResponseMessage _GET_catalog_products()
     {
-      return HttpStatusOK<Cli.Category[]>(Business.Category.GetAll(CallContext));
+      return HttpStatusOK<Cli.Product[]>(Business.Product.GetAll(CallContext));
     }
   }
 }

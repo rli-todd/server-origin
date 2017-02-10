@@ -10,6 +10,7 @@ namespace Aci.X.IwsLib.Storefront
   {
     public int transactionId;
     public string transactionDate;
+    public int userId;
     public decimal totalPrice;
     public decimal totalTax;
     public decimal totalAmount;

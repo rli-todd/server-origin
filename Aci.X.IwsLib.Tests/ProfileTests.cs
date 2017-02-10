@@ -48,7 +48,7 @@ namespace Aci.X.IwsLib.Tests
       string strJson;
       ProfileResponse response = ProfileClient.QueryPreviews(out strJson, _testQuery);
       Assert.AreEqual("1000", response.ResponseCode.ToString());
-      Assert.IsTrue(response.ProfileCount >= 10);
+      Assert.IsTrue(response.ProfileCount >= 5);
       string[] ProfileIDs = (from p in response.Profiles.Profile select p.ProfileID.ToString()).ToArray();
       Assert.IsTrue(ProfileIDs.Contains(_strTestProfileID));
       response = ProfileClient.QueryProfiles(out strJson, _strTestProfileID);

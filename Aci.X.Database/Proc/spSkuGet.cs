@@ -14,10 +14,11 @@ namespace Aci.X.Database
       : base(strProcName: "spSkuGet", conn: conn)
     {
     }
-    public DBSku[] Execute(byte tSiteID, int[] intSkuIDs)
+
+    public DBSku[] Execute(int intSiteID, int[] intSkuIDs = null)
     {
       Parameters.Clear();
-      Parameters.AddWithValue("@SiteID", tSiteID);
+      Parameters.AddWithValue("@SiteID", intSiteID);
       Parameters.Add(new SqlParameter("@SkuKeys", SqlDbType.Structured)
       {
         TypeName = "dbo.ID_TABLE",
@@ -26,27 +27,8 @@ namespace Aci.X.Database
 
       using (MySqlDataReader reader = ExecuteReader())
       {
-        var skus = reader.GetResults<DBSku>();
-        var products = reader.GetResults<DBProduct>();
-
-        Dictionary<int, List<DBSku>> dictCategorySkus = new Dictionary<int, List<DBSku>>();
-        Dictionary<int, List<DBProduct>> dictSkuProducts = new Dictionary<int, List<DBProduct>>();
-        foreach (var product in products)
-        {
-          if (!dictSkuProducts.ContainsKey(product.SkuID))
-            dictSkuProducts[product.SkuID] = new List<DBProduct>();
-          dictSkuProducts[product.SkuID].Add(product);
-        }
-        foreach (var sku in skus)
-        {
-          if (!dictCategorySkus.ContainsKey(sku.CategoryID))
-            dictCategorySkus[sku.CategoryID] = new List<DBSku>();
-          dictCategorySkus[sku.CategoryID].Add(sku);
-          sku.Products = dictSkuProducts.ContainsKey(sku.SkuID)
-            ? dictSkuProducts[sku.SkuID].ToArray()
-            : new DBProduct[0];
-        }
-        return skus;
+        var Skus = reader.GetResults<DBSku>();
+        return Skus;
       }
     }
   }

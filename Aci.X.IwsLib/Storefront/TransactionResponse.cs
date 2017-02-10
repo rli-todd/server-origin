@@ -12,4 +12,11 @@ namespace Aci.X.IwsLib.Storefront
     public ResponseDetail responseDetail;
     public TransactTransaction transaction;
   }
+
+  public class TransactionGetResponse
+  {
+    public int responseCode;
+    public ResponseDetail responseDetail;
+    public List<TransactTransaction> transactions;
+  }
 }

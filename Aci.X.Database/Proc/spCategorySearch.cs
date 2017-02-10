@@ -6,23 +6,23 @@ using Solishine.CommonLib;
 namespace Aci.X.Database
 {
   [MySpGroup("AciXDB")]
-  public class spSkuSearch : MyStoredProc
+  public class spCategorySearch : MyStoredProc
   {
-    public spSkuSearch(DbConnection conn)
-      : base(strProcName: "spSkuSearch", conn: conn)
+    public spCategorySearch(DbConnection conn)
+      : base(strProcName: "spCategorySearch", conn: conn)
     {
     }
 
     public int[] Execute(
       int intSiteID,
-      int[] intExternalSkuIDs)
+      int[] intExternalCategoryIDs)
     {
       Parameters.Clear();
       Parameters.AddWithValue("@SiteID", intSiteID);
-      Parameters.Add(new SqlParameter("@ExternalSkuIDs", SqlDbType.Structured)
+      Parameters.Add(new SqlParameter("@ExternalCategoryIDs", SqlDbType.Structured)
       {
         TypeName = "dbo.ID_TABLE",
-        Value = new IDTable(intExternalSkuIDs)
+        Value = new IDTable(intExternalCategoryIDs)
       });
 
       using (MySqlDataReader reader = ExecuteReader())

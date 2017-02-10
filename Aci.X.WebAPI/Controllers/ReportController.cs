@@ -93,16 +93,16 @@ namespace Aci.X.WebAPI
     /// </summary>
     /// <param name="report_id"></param>
     /// <returns></returns>
-    [GET("new?{order_id:int}&{profile_id}&{query_id:int}&{type_code?}"), HttpGet]
+    [GET("new?{order_id:int}&{profile_id}&{query_id:int?}&{type_code?}"), HttpGet]
     [ReturnValue(typeof(WebServiceResponse<Cli.Report>))]
-    public HttpResponseMessage _GET_report_new(int order_id, string profile_id, int query_id, string type_code=null)
+    public HttpResponseMessage _GET_report_new(int order_id, string profile_id, int? query_id=null, string type_code=null)
     {
       var report = Business.Report.Create(
         context: CallContext,
         strTypeCode: type_code,
         intOrderID: order_id,
         strProfileID: profile_id,
-        intQueryID: query_id);
+        intQueryID: query_id??0);
       return HttpStatusOK<Cli.Report>(report);
     }
 
